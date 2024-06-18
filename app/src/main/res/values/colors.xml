@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#B6E83D</color>
+    <color name="colorPrimaryLight">#FFFFFF</color>
+    <color name="colorPrimaryDark">#B6E83D</color>
+    <color name="colorAccent">#B6E83D</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="error_color">#9B101C</color>
+
+    <!--grey-->
+    <color name="gray">#b6b6b6</color>
+    <color name="md_grey_50">#FAFAFA</color>
+    <color name="md_grey_100">#F5F5F5</color>
+    <color name="md_grey_300">#e0e0e0</color>
+    <color name="md_grey_400">#BDBDBD</color>
+    <color name="md_grey_600">#757575</color>
+    <color name="md_grey_700">#616161</color>
+    <color name="md_grey_800">#424242</color>
+    <color name="md_black_1000">#000000</color>
+    <color name="md_white_1000">#FFFFFF</color>
+    <color name="placeholderColor">#D1D1D1</color>
+    <color name="spinner_bg">#F0F3F7</color>
+
+
+    <!-- success colors -->
+    <color name="md_success_color">#71C341</color>
+
+    <!-- info color -->
+    <color name="md_info_color">#4688D6</color>
+
+    <!-- error color -->
+    <color name="md_error_color">#9B101C</color>
+
+</resources>
