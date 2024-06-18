@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="space_16">16dp</dimen>
+
+    <!-- Fonts -->
+    <dimen name="font_h6_size">20sp</dimen>
+    <dimen name="font_h7_size">18sp</dimen>
+    <dimen name="font_title_size">17sp</dimen>
+
+
+    <!--margin spacing-->
+    <dimen name="margin_120">120dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+
+</resources>
