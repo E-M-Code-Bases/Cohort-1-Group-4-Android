@@ -26,8 +26,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var prefs: Prefs
 
-    private var securityGuardId: String? = null
-
     private val movieAdapter =
         MovieIdAdapter { data: MovieId -> itemClicked(data) }
 
@@ -139,13 +137,4 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-//    private fun showSnackBar(message: String?, isSuccess: Boolean = true) {
-//        binding.root.let {
-//            this.snackbar(
-//                it,
-//                message,
-//                if (isSuccess) R.color.md_info_color else R.color.md_error_color
-//            )
-//        }
-//    }
 }
