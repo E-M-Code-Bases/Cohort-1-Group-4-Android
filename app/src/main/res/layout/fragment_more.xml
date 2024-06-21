@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.more.MoreFragment"
-    android:background="@color/black"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.movies.streamy.view.more.MoreViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.more.MoreFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/acGuideline1"
@@ -31,7 +37,7 @@
         android:letterSpacing="0.05"
         android:text="@string/title_profile"
         android:textAlignment="viewStart"
-        android:textColor="@color/white"
+        android:textColor="@color/md_black_1000"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/acGuideline2"
         app:layout_constraintStart_toStartOf="@+id/acGuideline1"
@@ -50,7 +56,7 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:text="SW" />
+        tools:text="JD" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -68,7 +74,7 @@
         android:fontFamily="@font/nunito_sans_bold"
         android:letterSpacing="0.03"
         android:text="John Doe"
-        android:textColor="@color/white"
+        android:textColor="@color/md_black_1000"
         android:textSize="@dimen/font_h6_size"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
@@ -81,7 +87,7 @@
         android:fontFamily="@font/nunito_sans_semibold"
         android:letterSpacing="0.03"
         android:text="Company Name"
-        android:textColor="@color/white"
+        android:textColor="@color/md_grey_600"
         android:textSize="@dimen/font_title_size"
         app:layout_constraintStart_toStartOf="@+id/tv_user_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
@@ -120,7 +126,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/md_grey_800"
                     android:contentDescription="image"
                     android:src="@drawable/ic_help"
                     app:layout_constraintStart_toStartOf="parent"
@@ -194,7 +200,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/md_grey_800"
                     android:contentDescription="@string/image"
                     android:src="@drawable/ic_logout"
                     app:layout_constraintStart_toStartOf="parent"
@@ -210,7 +216,7 @@
                     android:letterSpacing="0.03"
                     android:text="@string/text_logout"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/white"
+                    android:textColor="@color/md_grey_800"
                     android:textSize="@dimen/font_title_size"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_logout"
                     app:layout_constraintEnd_toStartOf="@+id/iv_right"
@@ -228,13 +234,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tv_logout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_logout"
-                    app:tint="@color/white" />
+                    app:tint="@color/md_grey_800" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="24dp"
-                    android:background="@color/white"
+                    android:background="@color/md_grey_100"
                     app:layout_constraintTop_toBottomOf="@+id/iv_logout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -248,7 +254,7 @@
                 android:letterSpacing="0.03"
                 android:text="Version : 1.0.0"
                 android:textAlignment="viewStart"
-                android:textColor="@color/white"
+                android:textColor="@color/md_grey_700"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_logout" />
@@ -259,3 +265,4 @@
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

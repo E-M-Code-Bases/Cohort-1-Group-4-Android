@@ -9,7 +9,7 @@ import com.haroldadmin.cnradapter.executeWithRetry
 import com.movies.streamy.R
 import com.movies.streamy.di.IoDispatcher
 import com.movies.streamy.model.dataSource.network.data.response.MovieId
-import com.movies.streamy.model.repository.implementation.HomeRepositoryImpl
+import com.movies.streamy.model.repository.implementation.MoviesRepositoryImpl
 import com.movies.streamy.utils.AppUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val homeRepository: HomeRepositoryImpl,
+    private val homeRepository: MoviesRepositoryImpl,
     @IoDispatcher private val iODispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 

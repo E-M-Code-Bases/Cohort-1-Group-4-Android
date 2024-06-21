@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentMoviesBinding
 import com.movies.streamy.model.dataSource.network.data.response.MovieId
 import com.movies.streamy.utils.Prefs
@@ -19,15 +21,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
-    //view binding
-    private var _binding: FragmentMoviesBinding? = null
+    // Data binding
+    private lateinit var binding: FragmentMoviesBinding
     private lateinit var viewModel: MoviesViewModel
-
-    private val binding get() = _binding!!
     private lateinit var prefs: Prefs
 
     private val movieAdapter =
-
         MovieIdAdapter { data: MovieId -> itemClicked(data) }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -35,7 +34,6 @@ class MoviesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
         prefs = Prefs(requireContext())
-
     }
 
     override fun onCreateView(
@@ -43,20 +41,24 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
-        return binding!!.root
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
+
     private fun initViews() {
         showShimmerEffect()
         viewModel.getMovieIds()
         setUpObservers()
         setUpAdapter()
     }
+
     private fun setUpObservers() {
         observe(viewModel.movieIds, ::setUpRecyclerView)
         observe(viewModel.viewState, ::onViewStateChanged)
@@ -74,10 +76,9 @@ class MoviesFragment : Fragment() {
         }
     }
 
-
     private fun setUpRecyclerView(movieIdList: List<MovieId?>?) {
         if (movieIdList?.isEmpty() == true) {
-//            binding.noDataGroup.visibility = View.VISIBLE
+            // binding.noDataGroup.visibility = View.VISIBLE
         } else {
             hideShimmerEffect()
             movieAdapter.submitList(movieIdList)
@@ -89,21 +90,21 @@ class MoviesFragment : Fragment() {
         when (state) {
             is MoviesViewState.Loading -> {
                 showShimmerEffect()
-//                binding.noTextOrder.visibility = View.GONE
-//                binding.noImageOrder.visibility = View.GONE
+                // binding.noTextOrder.visibility = View.GONE
+                // binding.noImageOrder.visibility = View.GONE
             }
 
             is MoviesViewState.Success -> {
                 hideShimmerEffect()
-//                binding.noTextOrder.visibility = View.GONE
-//                binding.noImageOrder.visibility = View.GONE
+                // binding.noTextOrder.visibility = View.GONE
+                // binding.noImageOrder.visibility = View.GONE
             }
 
             is MoviesViewState.Error -> {
                 hideShimmerEffect()
-//                showSnackBar(state.errorMessage, false)
-//                binding.noTextOrder.visibility = View.VISIBLE
-//                binding.noImageOrder.visibility = View.VISIBLE
+                // showSnackBar(state.errorMessage, false)
+                // binding.noTextOrder.visibility = View.VISIBLE
+                // binding.noImageOrder.visibility = View.VISIBLE
             }
 
             else -> {}
@@ -132,7 +133,5 @@ class MoviesFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
     }
-
 }

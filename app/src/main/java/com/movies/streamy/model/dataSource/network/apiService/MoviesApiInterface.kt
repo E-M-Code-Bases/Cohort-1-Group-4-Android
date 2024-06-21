@@ -6,11 +6,19 @@ import com.movies.streamy.model.dataSource.network.data.response.MovieIdResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface HomeApiInterface {
+interface MoviesApiInterface {
     @GET("3/movie/changes")
     suspend fun getMovieId(
         @Query("page") page: Int,
         @Query("api_key") apiKey: String?
     ): NetworkResponse<MovieIdResponse, ErrorResponse>
+
+    @GET("3/movie/changes")
+    suspend fun getMovieImage(
+        @Query("page") page: Int,
+        @Query("api_key") apiKey: String?
+    ): NetworkResponse<MovieIdResponse, ErrorResponse>
+
+
 
 }
