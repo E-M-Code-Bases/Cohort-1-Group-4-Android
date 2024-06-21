@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.movies.streamy.model.repository.abstraction.IMoreRepository
-import com.movies.streamy.model.repository.implementation.MoviesRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,8 +12,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MoreViewModel @Inject constructor(
     private val moreRepository: IMoreRepository,
-    private val homeRepository: MoviesRepositoryImpl,
-) : ViewModel() {
+
+  ) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "More"

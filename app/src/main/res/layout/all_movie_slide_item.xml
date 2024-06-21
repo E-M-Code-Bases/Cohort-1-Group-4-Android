@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/black">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image"
+            android:scaleType="fitXY" />
+
+        <TextView
+            style="@style/CustomTextStyle"
+            android:id="@+id/MovieName"
+            android:textStyle="bold"
+            android:text="@string/movie_name"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/image" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/MovieName">
+
+            <TextView
+                style="@style/CustomTextStyle"
+                android:id="@+id/Type"
+                android:text="@string/type"
+
+                />
+
+            <TextView
+                android:text="@string/genre"
+                style="@style/CustomTextStyle"
+                android:id="@+id/genre"></TextView>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

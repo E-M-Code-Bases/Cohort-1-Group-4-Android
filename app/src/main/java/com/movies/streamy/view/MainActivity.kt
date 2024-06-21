@@ -1,7 +1,6 @@
 package com.movies.streamy.view
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,6 +8,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.movies.streamy.R
 import com.movies.streamy.databinding.ActivityMainBinding
+
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,12 +30,10 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_building, R.id.navigation_profile
+                R.id.navigation_home, R.id.navigation_series, R.id.navigation_movie,R.id.navigation_profile
             )
         )
 
         navView.setupWithNavController(navController)
     }
-
 }
-
