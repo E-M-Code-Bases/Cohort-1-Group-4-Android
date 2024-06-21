@@ -1,4 +1,4 @@
-package com.movies.streamy.view.home
+package com.movies.streamy.view.movies
 
 import android.content.Context
 import android.view.LayoutInflater

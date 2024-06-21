@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.movies.streamy.view.home.HomeViewModel" />
+            type="com.movies.streamy.view.movies.MoviesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/spinner_bg"
-        tools:context=".view.home.HomeFragment">
+        tools:context=".view.movies.MoviesFragment">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView46"
