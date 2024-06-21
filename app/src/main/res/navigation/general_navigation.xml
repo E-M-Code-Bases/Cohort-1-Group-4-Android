@@ -6,15 +6,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.movies.streamy.view.home.HomeFragment"
+        android:name="com.movies.streamy.view.movies.MoviesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_building"
-        android:name="com.movies.streamy.view.series.SeriesFragment"
-        android:label="@string/title_building"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_movies" />
 
     <fragment
         android:id="@+id/navigation_profile"

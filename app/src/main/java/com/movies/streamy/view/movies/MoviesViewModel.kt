@@ -1,4 +1,4 @@
-package com.movies.streamy.view.home
+package com.movies.streamy.view.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.haroldadmin.cnradapter.executeWithRetry
 import com.movies.streamy.R
 import com.movies.streamy.di.IoDispatcher
 import com.movies.streamy.model.dataSource.network.data.response.MovieId
-import com.movies.streamy.model.repository.implementation.HomeRepositoryImpl
+import com.movies.streamy.model.repository.implementation.MoviesRepositoryImpl
 import com.movies.streamy.utils.AppUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepositoryImpl,
+class MoviesViewModel @Inject constructor(
+    private val homeRepository: MoviesRepositoryImpl,
     @IoDispatcher private val iODispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -26,13 +26,13 @@ class HomeViewModel @Inject constructor(
     val movieIds: LiveData<List<MovieId?>?>
         get() = _movieIds
 
-    private val _viewState = MutableLiveData<HomeViewState>()
-    val viewState: LiveData<HomeViewState>
+    private val _viewState = MutableLiveData<MoviesViewState>()
+    val viewState: LiveData<MoviesViewState>
         get() = _viewState
 
 
     fun getMovieIds() {
-        _viewState.postValue(HomeViewState.Loading)
+        _viewState.postValue(MoviesViewState.Loading)
         viewModelScope.launch(iODispatcher) {
             val result = executeWithRetry(times = 3) {
                 homeRepository.getMovieIds()
@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
 
             when (result) {
                 is NetworkResponse.Success -> {
-                    _viewState.postValue(HomeViewState.Success)
+                    _viewState.postValue(MoviesViewState.Success)
                     val data = result.body
 
                     _movieIds.postValue(data.results)
@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
 
                 is NetworkResponse.NetworkError -> {
                     _viewState.postValue(
-                        HomeViewState.Error(
+                        MoviesViewState.Error(
                             null,
                             R.string.network_error_msg,
                             null
@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
 
                 is NetworkResponse.ServerError -> {
                     _viewState.postValue(
-                        HomeViewState.Error(
+                        MoviesViewState.Error(
                             AppUtil.getErrorResponse(result.body),
                             null,
                             null
@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
 
                 is NetworkResponse.UnknownError -> {
                     _viewState.postValue(
-                        HomeViewState.Error(
+                        MoviesViewState.Error(
                             null,
                             R.string.unknown_error_msg,
                             null
