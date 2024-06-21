@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentHomeBinding
 import com.movies.streamy.model.dataSource.network.data.response.MovieId
 import com.movies.streamy.utils.Prefs
@@ -19,11 +21,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    //view binding
-    private var _binding: FragmentHomeBinding? = null
+    // Data binding
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
-
-    private val binding get() = _binding!!
     private lateinit var prefs: Prefs
 
     private val movieAdapter =
@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         prefs = Prefs(requireContext())
-
     }
 
     override fun onCreateView(
@@ -42,9 +41,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding!!.root
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,10 +76,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun setUpRecyclerView(movieIdList: List<MovieId?>?) {
         if (movieIdList?.isEmpty() == true) {
-//            binding.noDataGroup.visibility = View.VISIBLE
+            // binding.noDataGroup.visibility = View.VISIBLE
         } else {
             hideShimmerEffect()
             movieAdapter.submitList(movieIdList)
@@ -91,21 +90,21 @@ class HomeFragment : Fragment() {
         when (state) {
             is HomeViewState.Loading -> {
                 showShimmerEffect()
-//                binding.noTextOrder.visibility = View.GONE
-//                binding.noImageOrder.visibility = View.GONE
+                // binding.noTextOrder.visibility = View.GONE
+                // binding.noImageOrder.visibility = View.GONE
             }
 
             is HomeViewState.Success -> {
                 hideShimmerEffect()
-//                binding.noTextOrder.visibility = View.GONE
-//                binding.noImageOrder.visibility = View.GONE
+                // binding.noTextOrder.visibility = View.GONE
+                // binding.noImageOrder.visibility = View.GONE
             }
 
             is HomeViewState.Error -> {
                 hideShimmerEffect()
-//                showSnackBar(state.errorMessage, false)
-//                binding.noTextOrder.visibility = View.VISIBLE
-//                binding.noImageOrder.visibility = View.VISIBLE
+                // showSnackBar(state.errorMessage, false)
+                // binding.noTextOrder.visibility = View.VISIBLE
+                // binding.noImageOrder.visibility = View.VISIBLE
             }
 
             else -> {}
@@ -134,7 +133,5 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
     }
-
 }
