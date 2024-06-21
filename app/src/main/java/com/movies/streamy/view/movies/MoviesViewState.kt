@@ -1,16 +1,16 @@
-package com.movies.streamy.view.home
+package com.movies.streamy.view.movies
 
-sealed class HomeViewState {
+sealed class MoviesViewState {
 
     /**
      * Network state loading.
      */
-    object Loading : HomeViewState()
+    object Loading : MoviesViewState()
 
     /**
      * Network state Success.
      */
-    object Success : HomeViewState()
+    object Success : MoviesViewState()
 
 
     /**
@@ -20,6 +20,6 @@ sealed class HomeViewState {
         val errorMessage: String?,
         val stringResourceId: Int?,
         val errorCode: Int?
-    ) : HomeViewState()
+    ) : MoviesViewState()
 
 }

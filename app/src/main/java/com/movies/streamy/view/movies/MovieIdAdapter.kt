@@ -1,4 +1,4 @@
-package com.movies.streamy.view.home
+package com.movies.streamy.view.movies
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -43,7 +43,6 @@ class MovieIdAdapter(private val clicked: (Movies: MovieId) -> Unit) :
             }
         }
     }
-
     private class TransactionsDiffCallback : DiffUtil.ItemCallback<MovieId>() {
         override fun areItemsTheSame(
             oldItem: MovieId,

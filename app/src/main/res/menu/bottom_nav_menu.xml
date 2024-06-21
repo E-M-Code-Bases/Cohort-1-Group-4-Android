@@ -7,9 +7,19 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_building"
+        android:id="@+id/navigation_series"
         android:icon="@drawable/baseline_cast_24"
         android:title="@string/title_series" />
+    <item
+        android:id="@+id/navigation_movie"
+        android:icon="@drawable/baseline_airplay_24"
+        android:title="@string/title_movies" />
+
+    <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/favorite_icon"
+        android:title="@string/favorite"
+        />
 
     <item
         android:id="@+id/navigation_profile"
