@@ -1,6 +1,7 @@
 package com.movies.streamy.view
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -8,8 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.movies.streamy.R
 import com.movies.streamy.databinding.ActivityMainBinding
-
-
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,4 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController(navController)
     }
+
 }
+

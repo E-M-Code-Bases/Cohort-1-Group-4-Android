@@ -13,4 +13,12 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String?
     ): NetworkResponse<MovieIdResponse, ErrorResponse>
 
+    @GET("3/movie/changes")
+    suspend fun getMovieImage(
+        @Query("page") page: Int,
+        @Query("api_key") apiKey: String?
+    ): NetworkResponse<MovieIdResponse, ErrorResponse>
+
+
+
 }
