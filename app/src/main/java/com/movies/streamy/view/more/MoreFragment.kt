@@ -22,6 +22,7 @@ class MoreFragment : Fragment() {
     private val binding get() = _binding
 
     private lateinit var moreViewModel: MoreViewModel
+    private var securityGuardId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
