@@ -24,7 +24,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FavoriteMoviesFragment : Fragment() {
-    // Data binding
     private lateinit var binding: FragmentFavoriteMoviesBinding
     private lateinit var viewModel: FavoriteMoviesViewModel
     private lateinit var prefs: Prefs
@@ -47,11 +46,11 @@ class FavoriteMoviesFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
-
 
     private fun initViews() {
         showShimmerEffect()
@@ -67,11 +66,8 @@ class FavoriteMoviesFragment : Fragment() {
 
     private fun setUpAdapter() {
         binding.FavMoviesRec.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(false)
-            (layoutManager as LinearLayoutManager).reverseLayout = true
-            (layoutManager as LinearLayoutManager).stackFromEnd = true
             adapter = movieAdapter
         }
     }
@@ -86,21 +82,10 @@ class FavoriteMoviesFragment : Fragment() {
     }
 
     private fun onViewStateChanged(state: MoviesViewState) {
-        hideShimmerEffect()
         when (state) {
-            is MoviesViewState.Loading -> {
-                showShimmerEffect()
-                // Handle loading state
-            }
-            is MoviesViewState.Success -> {
-                hideShimmerEffect()
-                // Handle success state
-            }
-            is MoviesViewState.Error -> {
-                hideShimmerEffect()
-                // Handle error state
-            }
-            else -> {}
+            is MoviesViewState.Loading -> showShimmerEffect()
+            is MoviesViewState.Success -> hideShimmerEffect()
+            is MoviesViewState.Error -> hideShimmerEffect()
         }
     }
 
@@ -117,7 +102,7 @@ class FavoriteMoviesFragment : Fragment() {
     }
 
     private fun itemClicked(data: MovieId) {
-        //todo
+        // TODO: Handle item click
     }
 
     override fun onDestroyView() {
