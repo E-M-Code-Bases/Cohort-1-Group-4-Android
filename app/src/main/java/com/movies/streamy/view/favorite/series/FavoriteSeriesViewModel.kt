@@ -1,4 +1,4 @@
-package com.movies.streamy.view.favorite
+package com.movies.streamy.view.favorite.series
 
 import androidx.lifecycle.ViewModel
 

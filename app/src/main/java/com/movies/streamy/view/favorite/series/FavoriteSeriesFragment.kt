@@ -1,4 +1,4 @@
-package com.movies.streamy.view.favorite
+package com.movies.streamy.view.favorite.series
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.movies.streamy.R
 
-class FavoriteMoviesFragment : Fragment() {
+class FavoriteSeriesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FavoriteMoviesFragment()
+        fun newInstance() = FavoriteSeriesFragment()
     }
 
-    private val viewModel: FavoriteMoviesViewModel by viewModels()
+    private val viewModel: FavoriteSeriesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +26,6 @@ class FavoriteMoviesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
+        return inflater.inflate(R.layout.fragment_favorite_series, container, false)
     }
 }
