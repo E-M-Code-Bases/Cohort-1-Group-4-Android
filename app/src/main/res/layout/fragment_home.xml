@@ -25,7 +25,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/nunito_extrabold"
-            android:text="Movie List"
+            android:text="@string/app_name"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="@dimen/font_h7_size"
@@ -41,6 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:listitem="@layout/all_movie_slide_item"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/layout_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,22 +94,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/favorite_icon"
-                android:layout_gravity="center"
                 app:layout_constraintTop_toTopOf="@id/Trailler"
                 app:layout_constraintStart_toEndOf="@id/Trailler"
                 app:layout_constraintEnd_toEndOf="parent" />
-
             <TextView
                 android:id="@+id/fav"
                 style="@style/CustomTextStyle"
                 android:text="Favorite"
                 app:layout_constraintStart_toStartOf="@id/FavIcon"
                 app:layout_constraintTop_toBottomOf="@+id/FavIcon"
-                app:layout_constraintEnd_toEndOf="@id/FavIcon" />
-
-
+                app:layout_constraintEnd_toEndOf="@id/FavIcon"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerFrameLayout"
             android:layout_width="match_parent"
