@@ -1,60 +1,162 @@
 package com.movies.streamy.view.home
 
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.movies.streamy.R
+import com.movies.streamy.databinding.FragmentHomeBinding
+import com.movies.streamy.model.dataSource.network.data.response.homeData.HomeResult
+import com.movies.streamy.utils.Prefs
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var prefs: Prefs
 
+    private val homeAdapter: HomeAdapter =  HomeAdapter()
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        prefs = Prefs(requireContext())
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+        viewModel.movieList.observe(viewLifecycleOwner, Observer {movieList ->
+            Log.d("HomeFragment", "Fetched Movie List: $movieList")
+            if (movieList.isNullOrEmpty()) {
+                // Handle empty case if needed
+            } else {
+//            hideShimmerEffect()
+                homeAdapter.asyncList.submitList(movieList)
+                binding.AllShows.apply {
+                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                    setHasFixedSize(true)
+                    adapter = homeAdapter
                 }
             }
+        })
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    private fun initViews() {
+        showShimmerEffect()
+        viewModel.getMovieLists()
+        setUpObservers()
+        setUpAdapter()
+    }
+
+    private fun setUpObservers() {
+        viewModel.movieList.observe(viewLifecycleOwner, ::setUpRecyclerView)
+        viewModel.viewState.observe(viewLifecycleOwner, ::onViewStateChanged)
+    }
+    private fun setUpAdapter() {
+        binding.AllShows.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = homeAdapter
+        }
+    }
+    private fun setUpRecyclerView(movieList: List<HomeResult?>?) {
+        Log.d("HomeFragment", "Fetched Movie List: $movieList")
+        if (movieList.isNullOrEmpty()) {
+            // Handle empty case if needed
+        } else {
+//            hideShimmerEffect()
+            homeAdapter.asyncList.submitList(movieList)
+            binding.AllShows.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = homeAdapter
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        applyScaleTransformation(recyclerView)
+                    }
+                })
+            }
+            binding.AllShows.post{applyScaleTransformation(binding.AllShows)}
+        }
+    }
+    private fun onViewStateChanged(state: HomeViewState) {
+        hideShimmerEffect()
+        when (state) {
+            is HomeViewState.Loading -> {
+                showShimmerEffect()
+            }
+            is HomeViewState.Success -> {
+                hideShimmerEffect()
+            }
+            is HomeViewState.Error -> {
+                hideShimmerEffect()
+                // Handle error state
+            }
+        }
+    }
+
+    private fun showShimmerEffect() {
+        binding.shimmerFrameLayout.startShimmer()
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+        binding.AllShows.visibility = View.GONE
+    }
+
+    private fun hideShimmerEffect() {
+        binding.shimmerFrameLayout.stopShimmer()
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.AllShows.visibility = View.VISIBLE
+    }
+
+    private fun itemClicked(data: HomeResult) {
+        // Handle item click
+    }
+}
+
+private fun applyScaleTransformation(recyclerView: RecyclerView){
+    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+    val midpoint = recyclerView.width/2f
+    val d0 = 0f
+    val d1 =0.9f * midpoint
+    val s0 = 1f
+    val s1 = 0.7f
+
+    for (i in 0 until recyclerView.childCount) {
+        val child = recyclerView.getChildAt(i)
+        val childMidpoint = (layoutManager.getDecoratedLeft(child) + layoutManager.getDecoratedRight(child)) / 2f
+        val d = Math.min(d1, Math.abs(midpoint - childMidpoint))
+        val scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0)
+        child.scaleX = scale
+        child.scaleY = scale
     }
 }

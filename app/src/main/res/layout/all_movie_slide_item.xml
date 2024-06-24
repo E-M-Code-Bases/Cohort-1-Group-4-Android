@@ -2,7 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="HomeResult"
+            type="com.movies.streamy.model.dataSource.network.data.response.homeData.HomeResult"
+            />
     </data>
 
     <RelativeLayout
@@ -12,8 +15,8 @@
         android:background="@color/black">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/image"
             android:scaleType="fitXY" />
 
@@ -41,7 +44,7 @@
             <TextView
                 android:text="@string/genre"
                 style="@style/CustomTextStyle"
-                android:id="@+id/genre"></TextView>
+                android:id="@+id/genre" />
 
         </LinearLayout>
 

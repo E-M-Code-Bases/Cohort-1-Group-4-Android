@@ -4,6 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="movie"
+            type="com.movies.streamy.model.dataSource.network.data.response.favorite.FavoriteMovieResponse"
+            />
 
     </data>
 
@@ -25,9 +29,10 @@
 
             <ImageView
                 android:id="@+id/image"
+                android:src="@drawable/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY" />
+                              android:scaleType="fitXY" />
         </androidx.cardview.widget.CardView>
 
         <TextView

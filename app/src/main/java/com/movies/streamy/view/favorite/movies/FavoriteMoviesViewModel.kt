@@ -1,4 +1,4 @@
-package com.movies.streamy.view.movies
+package com.movies.streamy.view.favorite.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +11,7 @@ import com.movies.streamy.di.IoDispatcher
 import com.movies.streamy.model.dataSource.network.data.response.MovieId
 import com.movies.streamy.model.repository.implementation.MoviesRepositoryImpl
 import com.movies.streamy.utils.AppUtil
+import com.movies.streamy.view.movies.MoviesViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch

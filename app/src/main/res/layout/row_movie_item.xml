@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin_20">
-
         <ImageButton
             android:id="@+id/image_item"
             android:layout_width="60dp"

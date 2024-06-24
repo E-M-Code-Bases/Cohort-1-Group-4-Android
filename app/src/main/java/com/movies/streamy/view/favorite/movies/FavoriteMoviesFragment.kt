@@ -15,7 +15,7 @@ import com.movies.streamy.databinding.FragmentFavoriteMoviesBinding
 import com.movies.streamy.model.dataSource.network.data.response.MovieId
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
-import com.movies.streamy.view.movies.FavoriteMoviesViewModel
+
 import com.movies.streamy.view.movies.MovieIdAdapter
 import com.movies.streamy.view.movies.MoviesViewState
 import dagger.hilt.android.AndroidEntryPoint

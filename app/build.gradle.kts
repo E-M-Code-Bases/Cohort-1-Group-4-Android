@@ -124,6 +124,12 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+
+    //image glider
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+
+
 }
 
 kapt {
