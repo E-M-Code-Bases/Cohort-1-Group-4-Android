@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -69,6 +70,7 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.firebase:firebase-database:21.0.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 

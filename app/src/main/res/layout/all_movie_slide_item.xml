@@ -25,14 +25,17 @@
 
         <TextView
             style="@style/CustomTextStyle"
+            android:gravity="center_horizontal"
             android:id="@+id/MovieName"
             android:textStyle="bold"
+            android:layout_width="150dp"
             android:text="@string/movie_name"
             android:layout_centerInParent="true"
             android:layout_below="@+id/image" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/MovieName">
@@ -45,7 +48,7 @@
                 />
 
             <TextView
-                android:text="@string/genre"
+                android:text="Rating"
                 style="@style/CustomTextStyle"
                 android:id="@+id/genre" />
 
