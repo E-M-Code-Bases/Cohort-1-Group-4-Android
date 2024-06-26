@@ -10,14 +10,26 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 
+//@Module
+//
+//object MoviesModule {
+//    @Provides
+//    fun provideMoviesApiService(
+//        retrofit: Retrofit
+//    ): MoviesApiInterface = retrofit.create(MoviesApiInterface::class.java)
+//}
 @Module
-@InstallIn(ActivityRetainedComponent::class)
-object HomeModule {
+@InstallIn(SingletonComponent::class)
+object MoviesModule {
+
     @Provides
-    fun provideHomeApiService(
+    @Singleton
+    fun provideMoviesApiService(
         retrofit: Retrofit
     ): MoviesApiInterface = retrofit.create(MoviesApiInterface::class.java)
 }
@@ -25,10 +37,10 @@ object HomeModule {
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 abstract class HomeBindingModule {
+
     @Binds
     abstract fun bindHomeDataSourceImpl(impl: MoviesDataSourceImpl): IMoviesDataSource
 
     @Binds
     abstract fun bindHomeRepositoryImpl(impl: MoviesRepositoryImpl): IMoviesRepository
-
 }

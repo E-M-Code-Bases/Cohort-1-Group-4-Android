@@ -2,37 +2,39 @@ package com.movies.streamy.view.movies
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentMoviesBinding
-import com.movies.streamy.model.dataSource.network.data.response.MovieId
+import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+private const val TAG = "movies"
+
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
-    // Data binding
     private lateinit var binding: FragmentMoviesBinding
     private lateinit var viewModel: MoviesViewModel
     private lateinit var prefs: Prefs
 
-    private val movieAdapter =
-        MovieIdAdapter { data: MovieId -> itemClicked(data) }
+    private val popularMovieAdapter =
+        PopularMovieAdapter()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
         prefs = Prefs(requireContext())
     }
 
@@ -42,8 +44,23 @@ class MoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
+
+        //binding.viewModel = viewModel
+        //binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.popularMovies.observe(viewLifecycleOwner, Observer{
+            Log.d(TAG, it.toString())
+            popularMovieAdapter.asyncList.submitList(it)
+            binding.rvMovies.apply {
+                layoutManager = GridLayoutManager(requireContext(), 3)
+                setHasFixedSize(false)
+                //adapter?.setHasStableIds(true)
+                adapter = popularMovieAdapter
+            }
+
+        })
+
         return binding.root
     }
 
@@ -54,36 +71,33 @@ class MoviesFragment : Fragment() {
 
     private fun initViews() {
         showShimmerEffect()
-        viewModel.getMovieIds()
+       // viewModel.getPopularMovies()
         setUpObservers()
         setUpAdapter()
     }
 
     private fun setUpObservers() {
-        observe(viewModel.movieIds, ::setUpRecyclerView)
+      //  observe(viewModel.popularMovies, ::setUpRecyclerView)
         observe(viewModel.viewState, ::onViewStateChanged)
     }
 
     private fun setUpAdapter() {
         binding.rvMovies.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(requireContext(), 3)
             setHasFixedSize(false)
-            (layoutManager as LinearLayoutManager).reverseLayout = true
-            (layoutManager as LinearLayoutManager).stackFromEnd = true
             adapter?.setHasStableIds(true)
-            adapter = movieAdapter
+            adapter = popularMovieAdapter
         }
     }
 
-    private fun setUpRecyclerView(movieIdList: List<MovieId?>?) {
-        if (movieIdList?.isEmpty() == true) {
-            // binding.noDataGroup.visibility = View.VISIBLE
-        } else {
-            hideShimmerEffect()
-            movieAdapter.submitList(movieIdList)
-        }
-    }
+//    private fun setUpRecyclerView(movieList: List<PopularMovieResult?>?) {
+//        if (movieList?.isEmpty() == true) {
+//            // binding.noDataGroup.visibility = View.VISIBLE
+//        } else {
+//            hideShimmerEffect()
+//            popularMovieAdapter.asyncList.submitList(movieList)
+//        }
+//    }
 
     private fun onViewStateChanged(state: MoviesViewState) {
         hideShimmerEffect()
@@ -123,8 +137,8 @@ class MoviesFragment : Fragment() {
         binding.rvMovies.visibility = View.VISIBLE
     }
 
-    private fun itemClicked(data: MovieId) {
-        //todo
+    private fun itemClicked(data: PopularMovieResult) {
+        // Handle item click
     }
 
     override fun onDestroyView() {

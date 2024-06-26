@@ -1,7 +1,5 @@
 package com.movies.streamy.di
 
-
-
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -115,3 +113,36 @@ class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 }
+
+/*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
+import com.movies.streamy.model.dataSource.network.apiService.MoviesApiInterface
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoviesApiService(retrofit: Retrofit): MoviesApiInterface {
+        return retrofit.create(MoviesApiInterface::class.java)
+    }
+}
+*/
