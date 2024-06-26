@@ -54,7 +54,7 @@ android {
     productFlavors {
         create("production") {
             resValue("string", "app_name", "Streamy")
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
             buildConfigField("String", "API_KEY", apiKey)
         }
     }
@@ -114,6 +114,10 @@ dependencies {
     //UI
     implementation("com.github.skydoves:powerspinner:1.1.9")
 
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt ("com.github.bumptech.glide:compiler:4.12.0")
+
     //Tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     implementation("junit:junit:4.13.2")
@@ -129,3 +133,4 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+
