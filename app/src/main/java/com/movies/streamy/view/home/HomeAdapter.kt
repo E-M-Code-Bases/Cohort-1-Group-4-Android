@@ -113,15 +113,20 @@ class HomeAdapter(private val itemClickListener: OnItemClickListener) : Recycler
             binding.MovieName.text = data.title
             binding.Type.text = data.media_type
 
-            data.poster_path?.let { posterPath ->
-                if (posterPath.isNotEmpty()) {
-                    Glide.with(binding.image.context)
-                        .load(posterPath)
-                        .into(binding.image)
-                } else {
-                    binding.image.setImageResource(R.drawable.logo)
-                }
-            }
+            val posterUrl = "https://image.tmdb.org/t/p/w500${data.poster_path}"
+            Glide.with(binding.image.context)
+                .load(posterUrl)
+                .into(binding.image)
+
+//            data.poster_path?.let { posterPath ->
+//                if (posterPath.isNotEmpty()) {
+//                    Glide.with(binding.image.context)
+//                        .load(posterPath)
+//                        .into(binding.image)
+//                } else {
+//                    binding.image.setImageResource(R.drawable.logo)
+//                }
+//            }
         }
     }
 
