@@ -1,31 +1,21 @@
 package com.movies.streamy.view.favorite
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.movies.streamy.room.favorites.FavMovieDBRepository
+import com.movies.streamy.room.favorites.FavMovieEntity
+import kotlinx.coroutines.launch
 
-class FavoriteViewModel : ViewModel() {
+class FavoriteViewModel(private val repository: FavMovieDBRepository) : ViewModel() {
 
-    // Example data. Replace this with your actual data model.
-    private val _favoriteMovies = MutableLiveData<List<String>>()
-    val favoriteMovies: LiveData<List<String>> get() = _favoriteMovies
+    val favoriteMovies: LiveData<List<FavMovieEntity>> = repository.getFavoriteMovies()
+    val favoriteSeries: LiveData<List<FavMovieEntity>> = repository.getFavoriteSeries()
 
-    private val _favoriteSeries = MutableLiveData<List<String>>()
-    val favoriteSeries: LiveData<List<String>> get() = _favoriteSeries
-
-    init {
-        // Load initial data or set default values
-        loadFavoriteMovies()
-        loadFavoriteSeries()
-    }
-
-    private fun loadFavoriteMovies() {
-        // Replace this with your actual data loading logic
-        _favoriteMovies.value = listOf("Movie 1", "Movie 2", "Movie 3")
-    }
-
-    private fun loadFavoriteSeries() {
-        // Replace this with your actual data loading logic
-        _favoriteSeries.value = listOf("Series 1", "Series 2", "Series 3")
+    fun refreshFavorites() {
+        viewModelScope.launch {
+            repository.getFavoriteMovies()
+            repository.getFavoriteSeries()
+        }
     }
 }

@@ -1,84 +1,22 @@
 package com.movies.streamy.view.favorite.movies
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.haroldadmin.cnradapter.NetworkResponse
-import com.haroldadmin.cnradapter.executeWithRetry
-import com.movies.streamy.R
-import com.movies.streamy.di.IoDispatcher
-import com.movies.streamy.model.dataSource.network.data.response.MovieId
-import com.movies.streamy.model.repository.implementation.MoviesRepositoryImpl
-import com.movies.streamy.utils.AppUtil
-import com.movies.streamy.view.movies.MoviesViewState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
+import com.movies.streamy.room.favorites.FavMovieDBRepository
+import com.movies.streamy.room.favorites.FavMovieEntity
 
-@HiltViewModel
-class FavoriteMoviesViewModel @Inject constructor(
-    private val MovieFavRepository: MoviesRepositoryImpl,
-    @IoDispatcher private val iODispatcher: CoroutineDispatcher,
-) : ViewModel() {
-
-    private val _movieIds = MutableLiveData<List<MovieId?>?>()
-    val movieIds: LiveData<List<MovieId?>?>
-        get() = _movieIds
-
-    private val _viewState = MutableLiveData<MoviesViewState>()
-    val viewState: LiveData<MoviesViewState>
-        get() = _viewState
-
-
-    fun getMovieIds() {
-        _viewState.postValue(MoviesViewState.Loading)
-        viewModelScope.launch(iODispatcher) {
-            val result = executeWithRetry(times = 3) {
-                MovieFavRepository.getMovieIds()
-            }
-
-            when (result) {
-                is NetworkResponse.Success -> {
-                    _viewState.postValue(MoviesViewState.Success)
-                    val data = result.body
-
-                    _movieIds.postValue(data.results)
-                }
-
-                is NetworkResponse.NetworkError -> {
-                    _viewState.postValue(
-                        MoviesViewState.Error(
-                            null,
-                            R.string.network_error_msg,
-                            null
-                        )
-                    )
-                }
-
-                is NetworkResponse.ServerError -> {
-                    _viewState.postValue(
-                        MoviesViewState.Error(
-                            AppUtil.getErrorResponse(result.body),
-                            null,
-                            null
-                        )
-                    )
-                }
-
-                is NetworkResponse.UnknownError -> {
-                    _viewState.postValue(
-                        MoviesViewState.Error(
-                            null,
-                            R.string.unknown_error_msg,
-                            null
-                        )
-                    )
-                }
-
-            }
-        }
+class FavoriteMoviesViewModel(private val repository: FavMovieDBRepository) : ViewModel() {
+    val favoriteMovies: LiveData<List<FavMovieEntity>> = liveData {
+        emitSource(repository.getFavoriteMovies())
     }
-
 }
+
+class FavoriteMoviesViewModelFactory(private val repository: FavMovieDBRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return FavoriteMoviesViewModel(repository) as T
+    }
+}
+
+// Similarly implement FavoriteSeriesViewModel and its Factory

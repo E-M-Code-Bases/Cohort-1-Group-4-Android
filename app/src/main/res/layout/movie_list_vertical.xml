@@ -6,18 +6,15 @@
 
     <data>
         <variable
-            name="movie"
-            type="com.movies.streamy.model.dataSource.network.data.response.favorite.FavoriteMovieResponse"
+            name="HomeResult"
+            type="com.movies.streamy.model.dataSource.network.data.response.homeData.HomeResult"
             />
-
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@color/black">
-
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="150dp"
@@ -26,7 +23,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars"/>
-
 
         <TextView
             android:id="@+id/MovieName"

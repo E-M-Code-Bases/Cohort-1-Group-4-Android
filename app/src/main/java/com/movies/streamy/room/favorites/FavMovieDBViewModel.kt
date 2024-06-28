@@ -14,9 +14,9 @@ class FavMovieDBViewModel(private val repository: FavMovieDBRepository) : ViewMo
         }
     }
 
-    fun getAllFavorites() = liveData {
-        emit(repository.getAllMovieFavorites())
-    }
+    fun getFavoriteMovies() = repository.getFavoriteMovies()
+
+    fun getFavoriteSeries() = repository.getFavoriteSeries()
 }
 
 class FavoriteViewModelFactory(private val repository: FavMovieDBRepository) : ViewModelProvider.Factory {
@@ -24,4 +24,3 @@ class FavoriteViewModelFactory(private val repository: FavMovieDBRepository) : V
         return FavMovieDBViewModel(repository) as T
     }
 }
-
