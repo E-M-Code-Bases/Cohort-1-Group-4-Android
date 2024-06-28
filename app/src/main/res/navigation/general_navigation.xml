@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Navigation graph for the entire application -->
+<!--suppress ALL -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/loginFragment">
 
-    <!-- Login fragment -->
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.movies.streamy.LoginFragment"
+        android:name="com.movies.streamy.fragment_login"
         android:label="Login"
         tools:layout="@layout/fragment_login">
-        <!-- Actions from login fragment -->
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
@@ -23,32 +21,27 @@
             app:destination="@id/navigation_home" />
     </fragment>
 
-    <!-- Signup fragment -->
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.movies.streamy.SignupFragment"
+        android:name="com.movies.streamy.fragment_signup"
         android:label="Signup"
         tools:layout="@layout/fragment_signup">
-        <!-- Action to navigate back to login -->
         <action
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
 
-    <!-- Watchlist fragment -->
     <fragment
         android:id="@+id/watchlistFragment"
         android:name="com.movies.streamy.view.movies.MoviesFragment"
         android:label="Watchlist"
         tools:layout="@layout/fragment_watchlist" />
 
-    <!-- Home fragment -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.movies.streamy.view.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <!-- Actions from home fragment -->
         <action
             android:id="@+id/action_navigation_home_to_navigation_movie"
             app:destination="@id/navigation_movie" />
@@ -63,34 +56,29 @@
             app:destination="@id/navigation_favorite" />
     </fragment>
 
-    <!-- Series fragment -->
     <fragment
         android:id="@+id/navigation_series"
         android:name="com.movies.streamy.view.series.SeriesFragment"
         android:label="@string/title_series"
         tools:layout="@layout/fragment_series" />
 
-    <!-- Movie fragment -->
     <fragment
         android:id="@+id/navigation_movie"
         android:name="com.movies.streamy.view.movies.MoviesFragment"
         android:label="@string/title_movies"
         tools:layout="@layout/fragment_movies"/>
 
-    <!-- Favorite fragment -->
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.movies.streamy.view.favorite.FavoriteFragment"
         android:label="@string/favorite"
         tools:layout="@layout/fragment_favorite"/>
 
-    <!-- Profile fragment -->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.movies.streamy.view.more.MoreFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_more">
-        <!-- Actions from profile fragment -->
         <action
             android:id="@+id/action_navigation_profile_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -98,5 +86,4 @@
             android:id="@+id/action_navigation_profile_to_signupFragment"
             app:destination="@id/signupFragment" />
     </fragment>
-
 </navigation>
