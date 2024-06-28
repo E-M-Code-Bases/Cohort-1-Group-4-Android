@@ -9,47 +9,91 @@
             type="com.movies.streamy.view.movies.MoviesViewModel" />
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/black"
-        tools:context=".view.movies.MoviesFragment">
+        android:background="#000000"
+        tools:context=".MainActivity">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerFrameLayout"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            app:tabTextColor="#FFFFFF"
+            app:tabSelectedTextColor="#FFFFFF"
+            app:tabIndicatorColor="#FFFFFF">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabLatest"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:textSize="@dimen/font_h6_size"
+                android:text="Now Playing" />
 
-                <!-- Shimmer views go here -->
-                <include layout="@layout/watch_list" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabTrending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top Rated" />
 
-                <include layout="@layout/watch_list" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabPopular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular" />
 
-                <include layout="@layout/watch_list" />
+        </com.google.android.material.tabs.TabLayout>
 
-                <include layout="@layout/watch_list" />
-
-                <include layout="@layout/watch_list" />
-
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovies"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/row_movie_item" />
+            android:layout_below="@id/tabLayout" />
 
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tabLayout"
+            android:backgroundTint="@color/black"
+            tools:context=".view.movies.PopularMoviesFragment">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <!-- Shimmer views go here -->
+                    <include layout="@layout/watch_list" />
+                    <include layout="@layout/watch_list" />
+                    <include layout="@layout/watch_list" />
+                    <include layout="@layout/watch_list" />
+                    <include layout="@layout/watch_list" />
+                    <include layout="@layout/watch_list" />
+                    <include layout="@layout/watch_list" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/row_movie_item" />
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
 </layout>

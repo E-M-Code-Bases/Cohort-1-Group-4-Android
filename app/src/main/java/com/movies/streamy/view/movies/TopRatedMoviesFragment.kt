@@ -1,5 +1,6 @@
 package com.movies.streamy.view.movies
 
+
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -20,11 +21,18 @@ import com.movies.streamy.utils.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-private const val TAG = "movies"
-
+//class TopRatedMoviesFragment : Fragment() {
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        return inflater.inflate(R.layout.fragment_movies_top_rated, container, false)
+//    }
+//}
+private const val TAG = "topratedmovies"
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MoviesFragment : Fragment() {
+class TopRatedMoviesFragment : Fragment() {
     private lateinit var binding: FragmentMoviesBinding
     private lateinit var viewModel: MoviesViewModel
     private lateinit var prefs: Prefs
@@ -43,7 +51,7 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies_top_rated, container, false)
         viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
 
         //binding.viewModel = viewModel
@@ -71,13 +79,13 @@ class MoviesFragment : Fragment() {
 
     private fun initViews() {
         showShimmerEffect()
-       // viewModel.getPopularMovies()
+        // viewModel.getPopularMovies()
         setUpObservers()
         setUpAdapter()
     }
 
     private fun setUpObservers() {
-      //  observe(viewModel.popularMovies, ::setUpRecyclerView)
+        //  observe(viewModel.popularMovies, ::setUpRecyclerView)
         observe(viewModel.viewState, ::onViewStateChanged)
     }
 
@@ -104,21 +112,15 @@ class MoviesFragment : Fragment() {
         when (state) {
             is MoviesViewState.Loading -> {
                 showShimmerEffect()
-                // binding.noTextOrder.visibility = View.GONE
-                // binding.noImageOrder.visibility = View.GONE
             }
 
             is MoviesViewState.Success -> {
                 hideShimmerEffect()
-                // binding.noTextOrder.visibility = View.GONE
-                // binding.noImageOrder.visibility = View.GONE
             }
 
             is MoviesViewState.Error -> {
                 hideShimmerEffect()
-                // showSnackBar(state.errorMessage, false)
-                // binding.noTextOrder.visibility = View.VISIBLE
-                // binding.noImageOrder.visibility = View.VISIBLE
+//                 showSnackBar(state.errorMessage, false)
             }
 
             else -> {}
@@ -138,7 +140,7 @@ class MoviesFragment : Fragment() {
     }
 
     private fun itemClicked(data: PopularMovieResult) {
-        // Handle item click
+        // Todo() Handle item click
     }
 
     override fun onDestroyView() {

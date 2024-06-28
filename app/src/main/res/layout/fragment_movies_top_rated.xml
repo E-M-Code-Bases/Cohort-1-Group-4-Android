@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/posterImageView"
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="225dp"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
 
@@ -27,21 +27,13 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="start"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:text="title"
+            android:text="@{movie.originalTitle}"
             style="@style/CustomTextStyle"
             android:textSize="14sp"
             tools:text="Movie Title" />
-        <!--TextView
-        android:layout_marginTop="8dp"
-            android:id="@+id/movie_rating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@{movie.voteAverage}"
-            tools:text="Rate" /-->
-
 
     </LinearLayout>
 </layout>

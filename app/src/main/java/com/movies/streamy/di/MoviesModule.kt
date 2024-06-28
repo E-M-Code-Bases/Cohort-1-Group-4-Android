@@ -36,7 +36,7 @@ object MoviesModule {
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-abstract class HomeBindingModule {
+abstract class MovieBindingModule {
 
     @Binds
     abstract fun bindHomeDataSourceImpl(impl: MoviesDataSourceImpl): IMoviesDataSource

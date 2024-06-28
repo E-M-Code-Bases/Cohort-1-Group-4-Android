@@ -24,6 +24,10 @@ class MoviesViewModel @Inject constructor(
     private val _popularMovies = MutableLiveData<List<PopularMovieResult?>?>()
     val popularMovies: LiveData<List<PopularMovieResult?>?>
         get() = _popularMovies
+//    private val _topRatedMovies = MutableLiveData<List<PopularMovieResult?>?>()
+//    val popularMovies: LiveData<List<PopularMovieResult?>?>
+//        get() = _popularMovies
+
 
     private val _viewState = MutableLiveData<MoviesViewState>()
     val viewState: LiveData<MoviesViewState>
