@@ -69,6 +69,7 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
@@ -113,7 +114,11 @@ dependencies {
 
     //UI
     implementation("com.github.skydoves:powerspinner:1.1.9")
-
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation ("androidx.databinding:databinding-runtime:4.2.1")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation ("androidx.recyclerview:recyclerview:1.2")
     //Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
     kapt ("com.github.bumptech.glide:compiler:4.12.0")

@@ -4,12 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.movies.streamy.R
 import com.movies.streamy.databinding.ActivityMainBinding
-
-
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,17 +24,29 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
+        // Obtain the navigation controller
         val navController = findNavController(R.id.nav_host_fragment_activity_main2)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        // Configure the top-level destinations for the app bar
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_series,
-                R.id.navigation_movies,
+
+                R.id.navigation_home,
+                R.id.navigation_series,
+                R.id.navigation_movie,
                 R.id.navigation_profile
             )
         )
 
+        // Set up the action bar with the NavController
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Set up the BottomNavigationView with the Navigation Controller
         navView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main2)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
