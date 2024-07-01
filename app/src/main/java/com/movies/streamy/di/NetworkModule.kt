@@ -15,7 +15,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -33,7 +35,7 @@ import java.util.TimeZone
 object NetworkModule {
 
     private fun baseUrl() = BuildConfig.BASE_URL
-
+    val token = ProvidesTokenInterceptor()
 
     @Provides
     fun providesLoggingInterceptor(): HttpLoggingInterceptor {
@@ -45,11 +47,19 @@ object NetworkModule {
         }
         return loggingInterceptor
     }
+    class ProvidesTokenInterceptor(): Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val req = chain.request().newBuilder().addHeader("Authorization", "Bearer ${BuildConfig.API_KEY}").build()
+            return chain.proceed(req)
+        }
+
+    }
 
     @ProvideOkHttpClient
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(token)
             .addInterceptor(loggingInterceptor)
             .build()
     }
@@ -71,7 +81,7 @@ object NetworkModule {
         converterFactory: Converter.Factory,
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(baseUrl())
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(converterFactory)
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .client(okHttpClient)
@@ -113,36 +123,3 @@ class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 }
-
-/*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
-import com.movies.streamy.model.dataSource.network.apiService.MoviesApiInterface
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-
-@Module
-@InstallIn(SingletonComponent::class)
-object NetworkModule {
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(NetworkResponseAdapterFactory())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideMoviesApiService(retrofit: Retrofit): MoviesApiInterface {
-        return retrofit.create(MoviesApiInterface::class.java)
-    }
-}
-*/

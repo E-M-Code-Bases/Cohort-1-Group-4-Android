@@ -3,6 +3,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     app:startDestination="@id/loginFragment">
 
     <fragment
@@ -37,10 +38,12 @@
         android:label="Watchlist"
         tools:layout="@layout/fragment_watchlist" />
 
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.movies.streamy.view.home.HomeFragment"
         android:label="@string/title_home"
+
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_movie"
@@ -63,12 +66,14 @@
         tools:layout="@layout/fragment_series" />
 
     <fragment
+
         android:id="@+id/navigation_movie"
         android:name="com.movies.streamy.view.movies.MoviesFragment"
         android:label="@string/title_movies"
         tools:layout="@layout/fragment_movies"/>
 
     <fragment
+
         android:id="@+id/navigation_favorite"
         android:name="com.movies.streamy.view.favorite.FavoriteFragment"
         android:label="@string/favorite"
@@ -78,6 +83,8 @@
         android:id="@+id/navigation_profile"
         android:name="com.movies.streamy.view.more.MoreFragment"
         android:label="@string/title_profile"
+
+
         tools:layout="@layout/fragment_more">
         <action
             android:id="@+id/action_navigation_profile_to_loginFragment"

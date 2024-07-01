@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         // Configure the top-level destinations for the app bar
         val appBarConfiguration = AppBarConfiguration(
             setOf(
+
                 R.id.navigation_home,
                 R.id.navigation_series,
                 R.id.navigation_movie,

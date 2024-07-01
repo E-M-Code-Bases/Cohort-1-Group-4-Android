@@ -1,4 +1,4 @@
-package com.movies.streamy.view.movies;
+package com.movies.streamy.view.movies.adapters;
 
 import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
 import android.view.LayoutInflater
@@ -45,15 +45,17 @@ class PopularMovieAdapter :
                 fun bind(data: PopularMovieResult) {
                         binding.apply {
                                 root.setOnClickListener {
-                                        //clicked.invoke(data)
-                                        // todo()we should navigate to a page details
+                                        // clicked.invoke(data)
+                                        // todo() we should navigate to a page details
                                 }
-                                tvTitle.text = data.originalTitle
+                                tvTitle.text = data.title
 
                                 val posterUrl = "https://image.tmdb.org/t/p/w500${data.posterPath}"
                                 Glide.with(posterImageView.context)
                                         .load(posterUrl)
                                         .into(posterImageView)
+
+                                movieRating.text = data.voteAverage?.toString()
                         }
                 }
         }
