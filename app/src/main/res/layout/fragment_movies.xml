@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable
-            name="viewModel"
-            type="com.movies.streamy.view.movies.MoviesViewModel" />
+
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
-        tools:context=".MainActivity">
+        android:background="#000000">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
@@ -21,27 +17,26 @@
             android:layout_height="wrap_content"
             android:background="#000000"
             app:tabTextColor="#FFFFFF"
-            app:tabSelectedTextColor="#FFFFFF"
-            app:tabIndicatorColor="#FFFFFF">
+            app:tabSelectedTextColor="#B6E83D"
+            app:tabIndicatorColor="#B6E83D">
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabLatest"
+                android:id="@+id/nowPlaying"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_h6_size"
-                android:text="Now Playing" />
+                android:text="@string/now_playing" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabTrending"
+                android:id="@+id/topRated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Top Rated" />
+                android:text="@string/top_rated" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabPopular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Popular" />
+                android:text="@string/popular" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -51,49 +46,5 @@
             android:layout_height="match_parent"
             android:layout_below="@id/tabLayout" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tabLayout"
-            android:backgroundTint="@color/black"
-            tools:context=".view.movies.PopularMoviesFragment">
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerFrameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Shimmer views go here -->
-                    <include layout="@layout/watch_list" />
-                    <include layout="@layout/watch_list" />
-                    <include layout="@layout/watch_list" />
-                    <include layout="@layout/watch_list" />
-                    <include layout="@layout/watch_list" />
-                    <include layout="@layout/watch_list" />
-                    <include layout="@layout/watch_list" />
-
-                </LinearLayout>
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMovies"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/row_movie_item" />
-
-        </FrameLayout>
-
     </RelativeLayout>
-
 </layout>

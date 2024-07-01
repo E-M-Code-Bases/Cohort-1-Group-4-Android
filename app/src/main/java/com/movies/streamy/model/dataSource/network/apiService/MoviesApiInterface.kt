@@ -15,29 +15,29 @@ interface MoviesApiInterface {
     //NOW PLAYING
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): Response<NowPlayingMovieResponse>
 
     //TOP RATED
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): Response<TopRatedMovieResponse>
 
     //MOVIE CHANGES
     @GET("movie/changes")
     suspend fun getMovieId(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String?
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): NetworkResponse<MovieIdResponse, ErrorResponse>
 
     //    POPULAR
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): Response<PopularMovieResponse>
 
 

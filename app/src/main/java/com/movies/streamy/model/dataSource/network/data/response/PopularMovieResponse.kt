@@ -39,7 +39,7 @@ data class PopularMovieResult(
     @SerializedName("video")
     val video: Boolean?,
     @SerializedName("vote_average")
-    val voteAverage: String?,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
     val voteCount: Int?
 )

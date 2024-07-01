@@ -15,30 +15,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentMoviesBinding
+import com.movies.streamy.databinding.FragmentMoviesTopRatedBinding
 import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
+import com.movies.streamy.model.dataSource.network.data.response.TopRatedMovieResult
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
+import com.movies.streamy.view.movies.adapters.PopularMovieAdapter
+import com.movies.streamy.view.movies.adapters.TopRatedMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-//class TopRatedMoviesFragment : Fragment() {
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        return inflater.inflate(R.layout.fragment_movies_top_rated, container, false)
-//    }
-//}
 private const val TAG = "topratedmovies"
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class TopRatedMoviesFragment : Fragment() {
-    private lateinit var binding: FragmentMoviesBinding
+    private lateinit var binding: FragmentMoviesTopRatedBinding
     private lateinit var viewModel: MoviesViewModel
     private lateinit var prefs: Prefs
 
-    private val popularMovieAdapter =
-        PopularMovieAdapter()
+    private val topRatedMovieAdapter =
+        TopRatedMovieAdapter()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,14 +53,13 @@ class TopRatedMoviesFragment : Fragment() {
         //binding.viewModel = viewModel
         //binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.popularMovies.observe(viewLifecycleOwner, Observer{
+        viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer{
             Log.d(TAG, it.toString())
-            popularMovieAdapter.asyncList.submitList(it)
-            binding.rvMovies.apply {
+            topRatedMovieAdapter.asyncList.submitList(it)
+            binding.rvTopRatedMovies.apply {
                 layoutManager = GridLayoutManager(requireContext(), 3)
                 setHasFixedSize(false)
-                //adapter?.setHasStableIds(true)
-                adapter = popularMovieAdapter
+                adapter = topRatedMovieAdapter
             }
 
         })
@@ -81,7 +76,7 @@ class TopRatedMoviesFragment : Fragment() {
         showShimmerEffect()
         // viewModel.getPopularMovies()
         setUpObservers()
-        setUpAdapter()
+//        setUpAdapter()
     }
 
     private fun setUpObservers() {
@@ -89,21 +84,12 @@ class TopRatedMoviesFragment : Fragment() {
         observe(viewModel.viewState, ::onViewStateChanged)
     }
 
-    private fun setUpAdapter() {
-        binding.rvMovies.apply {
-            layoutManager = GridLayoutManager(requireContext(), 3)
-            setHasFixedSize(false)
-            adapter?.setHasStableIds(true)
-            adapter = popularMovieAdapter
-        }
-    }
-
-//    private fun setUpRecyclerView(movieList: List<PopularMovieResult?>?) {
-//        if (movieList?.isEmpty() == true) {
-//            // binding.noDataGroup.visibility = View.VISIBLE
-//        } else {
-//            hideShimmerEffect()
-//            popularMovieAdapter.asyncList.submitList(movieList)
+//    private fun setUpAdapter() {
+//        binding.rvMovies.apply {
+//            layoutManager = GridLayoutManager(requireContext(), 3)
+//            setHasFixedSize(false)
+//            adapter?.setHasStableIds(true)
+//            adapter = topRatedMovieAdapter
 //        }
 //    }
 
@@ -130,16 +116,16 @@ class TopRatedMoviesFragment : Fragment() {
     private fun showShimmerEffect() {
         binding.shimmerFrameLayout.startShimmer()
         binding.shimmerFrameLayout.visibility = View.VISIBLE
-        binding.rvMovies.visibility = View.GONE
+        binding.rvTopRatedMovies.visibility = View.GONE
     }
 
     private fun hideShimmerEffect() {
         binding.shimmerFrameLayout.stopShimmer()
         binding.shimmerFrameLayout.visibility = View.GONE
-        binding.rvMovies.visibility = View.VISIBLE
+        binding.rvTopRatedMovies.visibility = View.VISIBLE
     }
 
-    private fun itemClicked(data: PopularMovieResult) {
+    private fun itemClicked(data: TopRatedMovieResult) {
         // Todo() Handle item click
     }
 

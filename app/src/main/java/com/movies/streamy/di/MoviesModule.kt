@@ -14,15 +14,6 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-
-//@Module
-//
-//object MoviesModule {
-//    @Provides
-//    fun provideMoviesApiService(
-//        retrofit: Retrofit
-//    ): MoviesApiInterface = retrofit.create(MoviesApiInterface::class.java)
-//}
 @Module
 @InstallIn(SingletonComponent::class)
 object MoviesModule {

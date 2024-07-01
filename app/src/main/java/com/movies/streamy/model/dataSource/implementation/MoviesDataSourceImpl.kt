@@ -18,19 +18,20 @@ class MoviesDataSourceImpl @Inject constructor(
 ) : IMoviesDataSource {
 
     override suspend fun getMovieIds(): NetworkResponse<MovieIdResponse, ErrorResponse> {
-        return moviesApiInterface.getMovieId(1, BuildConfig.API_KEY)
+        return moviesApiInterface.getMovieId()
     }
 
     override suspend fun getPopularMovies(): Response<PopularMovieResponse> {
-        return moviesApiInterface.getPopularMovies(1, BuildConfig.API_KEY)
+        return moviesApiInterface.getPopularMovies()
     }
 
     override suspend fun getTopRatedMovies(): Response<TopRatedMovieResponse> {
-        return moviesApiInterface.getTopRatedMovies(1, BuildConfig.API_KEY)
+        return moviesApiInterface.getTopRatedMovies()
     }
 
     override suspend fun getNowPlayingMovies(): Response<NowPlayingMovieResponse> {
-        return moviesApiInterface.getNowPlayingMovies(1, BuildConfig.API_KEY)
+        return moviesApiInterface.getNowPlayingMovies()
+
     }
 
 }

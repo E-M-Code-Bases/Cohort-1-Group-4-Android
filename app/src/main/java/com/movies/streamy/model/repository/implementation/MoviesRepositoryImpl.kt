@@ -2,6 +2,8 @@ package com.movies.streamy.model.repository.implementation
 
 
 import com.haroldadmin.cnradapter.NetworkResponse
+import com.movies.streamy.di.MoviesModule
+import com.movies.streamy.di.NetworkModule
 import com.movies.streamy.model.dataSource.abstraction.IMoviesDataSource
 import com.movies.streamy.model.dataSource.network.data.response.ErrorResponse
 import com.movies.streamy.model.dataSource.network.data.response.MovieIdResponse
