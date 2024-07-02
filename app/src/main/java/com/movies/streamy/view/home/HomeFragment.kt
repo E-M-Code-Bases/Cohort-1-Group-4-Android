@@ -1,8 +1,11 @@
 package com.movies.streamy.view.home
 
 import HomeAdapter
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +13,19 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentHomeBinding
+import com.movies.streamy.model.dataSource.implementation.TrailerImpl
+import com.movies.streamy.model.dataSource.network.apiService.HomeApiInterface
 import com.movies.streamy.model.dataSource.network.data.response.homeData.HomeResult
+import com.movies.streamy.model.dataSource.network.data.response.homeData.TrailerResult
 import com.movies.streamy.room.favorites.FavMovieDB
 import com.movies.streamy.room.favorites.FavMovieDBRepository
 import com.movies.streamy.room.favorites.FavMovieDBViewModel
@@ -25,6 +34,8 @@ import com.movies.streamy.room.favorites.FavoriteViewModelFactory
 import com.movies.streamy.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -48,21 +59,31 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         val factory = FavoriteViewModelFactory(repository)
         favViewModel = ViewModelProvider(this, factory).get(FavMovieDBViewModel::class.java)
     }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-            ): View {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        homeAdapter = HomeAdapter(this)
 
         binding.Trailler.setOnClickListener {
             selectedItem?.let { item ->
-                playTrailer(item)
+                item.id?.let { it1 -> viewModel.getTrailerByMovieId(it1) }
             }
         }
+
+        viewModel.trailerList.observe(viewLifecycleOwner, Observer { trailerList ->
+            trailerList.firstOrNull()?.let { trailer ->
+                playTrailer(trailer)
+            } ?: run {
+                Toast.makeText(requireContext(), "Trailer not found", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        homeAdapter = HomeAdapter(this)
+
 
         binding.FavIcon.setOnClickListener {
             selectedItem?.let { item ->
@@ -158,22 +179,36 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
 
     override fun onItemClick(item: HomeResult) {
         selectedItem = item
-        Toast.makeText(context, "selected", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Selected: ${item.id}", Toast.LENGTH_SHORT).show()
         // Update UI to reflect the selection if needed
     }
 
-    private fun playTrailer(item: HomeResult) {
-        Toast.makeText(context, "Play Trailer", Toast.LENGTH_SHORT).show()
-        // Implement play trailer functionality
+//    private fun fetchTrailerAndPlay(movieId: Int) {
+//        viewModelScope.launch {
+//            try {
+//                val response = TrailerImpl().getTrailerByMovieId(movieId)
+//                response?.results?.firstOrNull()?.let { trailer ->
+//                    playTrailer(trailer)
+//                } ?: run {
+//                    Toast.makeText(requireContext(), "Trailer not found", Toast.LENGTH_SHORT).show()
+//                }
+//            } catch (t: Throwable) {
+//                Timber.e(t)
+//                Toast.makeText(requireContext(), "Error fetching trailer", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+
+
+    private fun playTrailer(trailer: TrailerResult) {
+        val trailerUrl = "https://www.youtube.com/watch?v=${trailer.key}"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl))
+        intent.putExtra("force_fullscreen", true)
+        startActivity(intent)
     }
 
     private fun addToFavorite(item: HomeResult) {
         Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show()
-        var country = "us"
-
-        if(item.origin_country.isNotEmpty()){
-            country = item.origin_country[0]
-        }
         val favoriteEntity = FavMovieEntity(
             id = item.id,
             title = item.title,
@@ -181,8 +216,8 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
             poster_path = item.poster_path,
             first_air_date = item.first_air_date,
             adult = item.adult,
-            origin_country = country,
-            )
+            original_language = item.original_language
+        )
         favViewModel.insert(favoriteEntity)
     }
 
@@ -190,22 +225,24 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         Toast.makeText(context, "Show details", Toast.LENGTH_SHORT).show()
         // Implement show details functionality
     }
-}
 
-private fun applyScaleTransformation(recyclerView: RecyclerView) {
-    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-    val midpoint = recyclerView.width / 2f
-    val d0 = 0f
-    val d1 = 1.2f * midpoint
-    val s0 = 1.2f
-    val s1 = 0.5f
+    private fun applyScaleTransformation(recyclerView: RecyclerView) {
+        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        val midpoint = recyclerView.width / 2f
+        val d0 = 0f
+        val d1 = 1.2f * midpoint
+        val s0 = 1.2f
+        val s1 = 0.5f
 
-    for (i in 0 until recyclerView.childCount) {
-        val child = recyclerView.getChildAt(i)
-        val childMidpoint = (layoutManager.getDecoratedLeft(child) + layoutManager.getDecoratedRight(child)) / 2f
-        val d = Math.min(d1, Math.abs(midpoint - childMidpoint))
-        val scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0)
-        child.scaleX = scale
-        child.scaleY = scale
+        for (i in 0 until recyclerView.childCount) {
+            val child = recyclerView.getChildAt(i)
+            val childMidpoint = (layoutManager.getDecoratedLeft(child) + layoutManager.getDecoratedRight(child)) / 2f
+            val d = Math.min(d1, Math.abs(midpoint - childMidpoint))
+            val scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0)
+            child.scaleX = scale
+            child.scaleY = scale
+        }
     }
+
 }
+

@@ -11,11 +11,15 @@ import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.movies.streamy.BuildConfig
+import com.movies.streamy.model.dataSource.implementation.TrailerImpl
+import com.movies.streamy.model.dataSource.network.apiService.TrailerInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -27,7 +31,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import javax.inject.Singleton
 
+
+private const val key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MDRmNjM4MzcyODEzZmMwMDk4YzQzNGVmN2MyMTFjYSIsIm5iZiI6MTcxOTkwOTgyMS44NjU5MTQsInN1YiI6IjY2NjgzYjdhNDk5OTJkNjc3MjUxYmRhMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DRn14pbwSD-7SPe4PJlonwydZtvI2j4MK45OH4dK4j0"
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -54,7 +61,6 @@ object NetworkModule {
             .build()
     }
 
-
     @Provides
     fun provideConverterFactory(): Converter.Factory {
         val gson: Gson =
@@ -76,6 +82,20 @@ object NetworkModule {
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .client(okHttpClient)
             .build()
+
+    @Provides
+    @Singleton
+    fun provideTrailerInterface(retrofit: Retrofit): TrailerInterface {
+        return retrofit.create(TrailerInterface::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrailerImpl(trailerInterface: TrailerInterface): TrailerImpl {
+        return TrailerImpl(trailerInterface)
+    }
+
+
 
 }
 
@@ -113,3 +133,28 @@ class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 }
+
+object RetrofitInitializerNoDI{
+    fun getRetrofitInstance(): TrailerInterface{
+        val token = TokenInterceptor(key)
+        val client = OkHttpClient.Builder().addInterceptor(token).build()
+        val retrofit = Retrofit.Builder().baseUrl( BuildConfig.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+        val apiService by lazy{
+            retrofit.create(TrailerInterface::class.java)
+        }
+
+        return apiService
+    }
+}
+
+class TokenInterceptor(private val token: String): Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
+        return chain.proceed(request)
+    }
+
+}
+

@@ -24,22 +24,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars"/>
         <TextView
-            style="@style/CustomTextStyle"
-            android:textStyle="bold"
-            android:id="@+id/name"
-            android:text="Name"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/MovieName"
-            app:layout_constraintStart_toEndOf="@+id/image"
-           />
-        <TextView
             android:id="@+id/MovieName"
             style="@style/CustomTextStyle"
             android:textStyle="bold"
             android:text="@string/movie_name"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/name"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image"
+
            />
         <TextView
             style="@style/CustomTextStyle"
@@ -76,18 +67,18 @@
             />
         <TextView
             style="@style/CustomTextStyle"
-            android:id="@+id/textCountry"
-            android:text="@string/country"
+            android:id="@+id/textlanguage"
+            android:text="Language"
             app:layout_constraintTop_toBottomOf="@id/year"
             app:layout_constraintStart_toEndOf="@id/image"
         />
 
         <TextView
-            android:id="@+id/country"
+            android:id="@+id/language"
             style="@style/CustomTextStyle"
-            android:text="@string/country"
+            android:text="Language"
             app:layout_constraintTop_toBottomOf="@id/year"
-            app:layout_constraintStart_toEndOf="@id/textCountry"
+            app:layout_constraintStart_toEndOf="@id/textlanguage"
             />
 
 
@@ -95,17 +86,16 @@
             style="@style/CustomTextStyle"
             android:text="Rating"
             android:id="@+id/textVote"
-            app:layout_constraintTop_toBottomOf="@+id/country"
+            app:layout_constraintTop_toBottomOf="@+id/language"
             app:layout_constraintStart_toEndOf="@+id/image"
-
-            app:layout_constraintHorizontal_bias="0.5" />
+            />
 
 
         <TextView
             android:id="@+id/genre"
             style="@style/CustomTextStyle"
-            android:text="@string/genre"
-            app:layout_constraintTop_toBottomOf="@+id/country"
+            android:text="Rating"
+            app:layout_constraintTop_toBottomOf="@+id/language"
             app:layout_constraintStart_toEndOf="@id/textVote"
          />
     </androidx.constraintlayout.widget.ConstraintLayout>

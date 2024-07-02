@@ -17,7 +17,7 @@ abstract class FavMovieDB : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavMovieDB ::class.java,
-                    "Movie-Series-Favorite"
+                    "Movie-Serie-Favorite"
                 ).build()
                 INSTANCE = instance
                 instance
