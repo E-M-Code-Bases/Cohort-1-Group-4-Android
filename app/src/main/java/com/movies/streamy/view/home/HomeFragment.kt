@@ -169,12 +169,20 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
 
     private fun addToFavorite(item: HomeResult) {
         Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show()
+        var country = "us"
+
+        if(item.origin_country.isNotEmpty()){
+            country = item.origin_country[0]
+        }
         val favoriteEntity = FavMovieEntity(
             id = item.id,
             title = item.title,
             media_type = item.media_type,
-            poster_path = item.poster_path
-        )
+            poster_path = item.poster_path,
+            first_air_date = item.first_air_date,
+            adult = item.adult,
+            origin_country = country,
+            )
         favViewModel.insert(favoriteEntity)
     }
 
@@ -188,9 +196,9 @@ private fun applyScaleTransformation(recyclerView: RecyclerView) {
     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
     val midpoint = recyclerView.width / 2f
     val d0 = 0f
-    val d1 = 0.9f * midpoint
-    val s0 = 1f
-    val s1 = 0.7f
+    val d1 = 1.2f * midpoint
+    val s0 = 1.2f
+    val s1 = 0.5f
 
     for (i in 0 until recyclerView.childCount) {
         val child = recyclerView.getChildAt(i)

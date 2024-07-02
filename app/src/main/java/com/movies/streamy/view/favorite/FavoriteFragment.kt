@@ -23,7 +23,6 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var moviesViewModel: FavoriteMoviesViewModel
-    private lateinit var seriesViewModel: FavoriteSeriesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +39,8 @@ class FavoriteFragment : Fragment() {
         val repository = FavMovieDBRepository(database.FavMovieDao())
 
         val moviesFactory = FavoriteMoviesViewModelFactory(repository)
-//        val seriesFactory = FavoriteSeriesViewModelFactory(repository)
 
         moviesViewModel = ViewModelProvider(this, moviesFactory).get(FavoriteMoviesViewModel::class.java)
-//        seriesViewModel = ViewModelProvider(this, seriesFactory).get(FavoriteSeriesViewModel::class.java)
 
         val viewPager: ViewPager2 = binding.viewPager
         val tabLayout: TabLayout = binding.tabLayout

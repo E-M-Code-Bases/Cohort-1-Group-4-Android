@@ -31,6 +31,7 @@ class FavoriteMoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        initViews()
 
         val database = FavMovieDB.getDatabase(requireContext())
         val repository = FavMovieDBRepository(database.FavMovieDao())
@@ -46,6 +47,20 @@ class FavoriteMoviesFragment : Fragment() {
             adapter.submitList(movies)
         }
     }
+
+
+//    private fun initViews() {
+//        showShimmerEffect()
+//        viewModel.favoriteMovies()
+//        setUpObservers()
+//    }
+//
+//    private fun setUpObservers() {
+//        viewModel..observe(viewLifecycleOwner, ::setUpRecyclerView)
+//        viewModel.viewState.observe(viewLifecycleOwner, ::onViewStateChanged)
+//    }
+
+
     private fun onViewStateChanged(state: FavoriteViewState) {
         hideShimmerEffect()
         when (state) {

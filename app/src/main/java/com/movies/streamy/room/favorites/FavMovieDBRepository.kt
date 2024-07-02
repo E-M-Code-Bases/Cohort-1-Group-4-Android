@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class FavMovieDBRepository(private val favoriteDao: FavMovieDao) {
-
     suspend fun insert(favoriteItem: FavMovieEntity) {
         withContext(Dispatchers.IO) {
             favoriteDao.insert(favoriteItem)
@@ -21,7 +20,7 @@ class FavMovieDBRepository(private val favoriteDao: FavMovieDao) {
 
     fun getFavoriteSeries(): LiveData<List<FavMovieEntity>> {
         return favoriteDao.getAllMovieFavorites().map { list ->
-            list.filter { it.media_type == "series" }
+            list.filter { it.media_type == "tv" }
         }
     }
 }

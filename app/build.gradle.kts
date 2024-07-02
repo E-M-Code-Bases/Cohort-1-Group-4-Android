@@ -5,7 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
+//    id("com.google.gms.google-services")
 }
 
 android {
@@ -48,7 +48,6 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
 
     }
-
     val apiKey: String = gradleLocalProperties(rootDir).getProperty("API_KEY")
 
     flavorDimensions("api")
@@ -60,6 +59,8 @@ android {
         }
     }
 }
+
+
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.21")

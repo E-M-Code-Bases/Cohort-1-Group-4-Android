@@ -11,9 +11,6 @@ interface FavMovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favoriteItem: FavMovieEntity)
 
-//    @Query("SELECT * FROM favorites")
-//    suspend fun getAllMovieFavorites(): List<FavMovieEntity>
-
     @Query("SELECT * FROM favorites")
     fun getAllMovieFavorites(): LiveData<List<FavMovieEntity>>
 }

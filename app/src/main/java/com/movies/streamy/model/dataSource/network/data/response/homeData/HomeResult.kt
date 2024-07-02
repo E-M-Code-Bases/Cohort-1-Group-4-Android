@@ -18,7 +18,7 @@ data class HomeResult(
     @SerializedName("name")
     val name: String?,
     @SerializedName("origin_country")
-    val origin_country: List<String>?,
+    val origin_country: List<String>,
     @SerializedName("original_language")
     val original_language: String?,
     @SerializedName("original_name")
