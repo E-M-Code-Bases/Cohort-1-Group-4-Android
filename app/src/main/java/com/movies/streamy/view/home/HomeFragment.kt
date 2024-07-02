@@ -1,3 +1,5 @@
+//package com.movies.streamy.view.home
+
 package com.movies.streamy.view.home
 
 import HomeAdapter
@@ -5,25 +7,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haroldadmin.cnradapter.NetworkResponse
 import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentHomeBinding
-import com.movies.streamy.model.dataSource.implementation.TrailerImpl
-import com.movies.streamy.model.dataSource.network.apiService.HomeApiInterface
 import com.movies.streamy.model.dataSource.network.data.response.homeData.HomeResult
 import com.movies.streamy.model.dataSource.network.data.response.homeData.TrailerResult
 import com.movies.streamy.room.favorites.FavMovieDB
@@ -34,8 +31,6 @@ import com.movies.streamy.room.favorites.FavoriteViewModelFactory
 import com.movies.streamy.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -84,10 +79,9 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         binding.lifecycleOwner = viewLifecycleOwner
         homeAdapter = HomeAdapter(this)
 
-
         binding.FavIcon.setOnClickListener {
             selectedItem?.let { item ->
-                addToFavorite(item)
+                toggleFavorite(item)
             }
         }
 
@@ -131,7 +125,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
 
     private fun setUpRecyclerView(movieList: List<HomeResult?>?) {
         if (movieList.isNullOrEmpty()) {
-            // Handle empty case if needed
+            // Handle empty case
         } else {
             homeAdapter.asyncList.submitList(movieList)
             binding.AllShows.apply {
@@ -179,26 +173,14 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
 
     override fun onItemClick(item: HomeResult) {
         selectedItem = item
-        Toast.makeText(context, "Selected: ${item.id}", Toast.LENGTH_SHORT).show()
-        // Update UI to reflect the selection if needed
+        Toast.makeText(context, "Selected: ${item.name ?: item.title}", Toast.LENGTH_SHORT).show()
+
+        item.id?.let {
+            favViewModel.isFavorite(it).observe(viewLifecycleOwner, Observer { isFavorite ->
+                updateFavoriteIcon(isFavorite)
+            })
+        }
     }
-
-//    private fun fetchTrailerAndPlay(movieId: Int) {
-//        viewModelScope.launch {
-//            try {
-//                val response = TrailerImpl().getTrailerByMovieId(movieId)
-//                response?.results?.firstOrNull()?.let { trailer ->
-//                    playTrailer(trailer)
-//                } ?: run {
-//                    Toast.makeText(requireContext(), "Trailer not found", Toast.LENGTH_SHORT).show()
-//                }
-//            } catch (t: Throwable) {
-//                Timber.e(t)
-//                Toast.makeText(requireContext(), "Error fetching trailer", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
 
     private fun playTrailer(trailer: TrailerResult) {
         val trailerUrl = "https://www.youtube.com/watch?v=${trailer.key}"
@@ -208,7 +190,6 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
     }
 
     private fun addToFavorite(item: HomeResult) {
-        Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show()
         val favoriteEntity = FavMovieEntity(
             id = item.id,
             title = item.title,
@@ -216,9 +197,40 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
             poster_path = item.poster_path,
             first_air_date = item.first_air_date,
             adult = item.adult,
-            original_language = item.original_language
+            original_language = item.original_language,
+            name = item.name,
+            original_title = item.original_title,
+            original_name = item.original_name,
+            vote_count = item.vote_count,
+            vote_average = item.vote_average,
+            overview = item.overview,
+            release_date = item.release_date,
+            popularity = item.popularity
         )
         favViewModel.insert(favoriteEntity)
+    }
+
+    private fun removeFromFavorite(item: HomeResult) {
+        favViewModel.deleteFavoriteById(item.id!!)
+    }
+
+    private fun toggleFavorite(item: HomeResult) {
+        item.id?.let {
+            favViewModel.isFavorite(it).observe(viewLifecycleOwner, Observer { isFavorite ->
+                if (isFavorite) {
+                    removeFromFavorite(item)
+                    updateFavoriteIcon(false)
+                } else {
+                    addToFavorite(item)
+                    updateFavoriteIcon(true)
+                }
+            })
+        }
+    }
+
+    private fun updateFavoriteIcon(isFavorite: Boolean) {
+        val color = if (isFavorite) R.color.colorAccent else R.color.white
+        binding.FavIcon.setColorFilter(ContextCompat.getColor(requireContext(), color))
     }
 
     private fun showDetails(item: HomeResult) {
@@ -243,6 +255,4 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
             child.scaleY = scale
         }
     }
-
 }
-

@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.movies.streamy.databinding.FragmentFavoriteMoviesBinding
 import com.movies.streamy.room.favorites.FavMovieDB
 import com.movies.streamy.room.favorites.FavMovieDBRepository
+import com.movies.streamy.view.favorite.FavoriteMoviesAdapter
 import com.movies.streamy.view.favorite.FavoriteViewState
-import com.movies.streamy.view.home.HomeViewState
 
 class FavoriteMoviesFragment : Fragment() {
 
@@ -47,18 +47,6 @@ class FavoriteMoviesFragment : Fragment() {
             adapter.submitList(movies)
         }
     }
-
-
-//    private fun initViews() {
-//        showShimmerEffect()
-//        viewModel.favoriteMovies()
-//        setUpObservers()
-//    }
-//
-//    private fun setUpObservers() {
-//        viewModel..observe(viewLifecycleOwner, ::setUpRecyclerView)
-//        viewModel.viewState.observe(viewLifecycleOwner, ::onViewStateChanged)
-//    }
 
 
     private fun onViewStateChanged(state: FavoriteViewState) {

@@ -11,11 +11,21 @@ class FavMovieDBRepository(private val favoriteDao: FavMovieDao) {
             favoriteDao.insert(favoriteItem)
         }
     }
+    suspend fun deleteFavoriteById(id: Int) {
+        favoriteDao.deleteFavoriteById(id)
+    }
+    suspend fun isFavorite(id: Int): Boolean {
+        return favoriteDao.isFavorite(id) != null
+    }
+
 
     fun getFavoriteMovies(): LiveData<List<FavMovieEntity>> {
         return favoriteDao.getAllMovieFavorites().map { list ->
             list.filter { it.media_type == "movie" }
         }
+    }
+    fun getAllMovieFavorites(): LiveData<List<FavMovieEntity>> {
+        return favoriteDao.getAllMovieFavorites()
     }
 
     fun getFavoriteSeries(): LiveData<List<FavMovieEntity>> {

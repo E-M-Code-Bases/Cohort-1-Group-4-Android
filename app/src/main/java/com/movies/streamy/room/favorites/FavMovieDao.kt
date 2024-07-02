@@ -13,4 +13,12 @@ interface FavMovieDao {
 
     @Query("SELECT * FROM favorites")
     fun getAllMovieFavorites(): LiveData<List<FavMovieEntity>>
+
+    @Query("DELETE FROM favorites WHERE id = :id")
+    suspend fun deleteFavoriteById(id: Int)
+
+
+
+    @Query("SELECT * FROM favorites WHERE id = :id LIMIT 1")
+    suspend fun isFavorite(id: Int): FavMovieEntity?
 }

@@ -14,8 +14,7 @@ import com.movies.streamy.room.favorites.FavMovieDB
 import com.movies.streamy.room.favorites.FavMovieDBRepository
 import com.movies.streamy.view.favorite.movies.FavoriteMoviesViewModel
 import com.movies.streamy.view.favorite.movies.FavoriteMoviesViewModelFactory
-import com.movies.streamy.view.favorite.series.FavoriteSeriesViewModel
-//import com.movies.streamy.view.favorite.series.FavoriteSeriesViewModelFactory
+
 
 class FavoriteFragment : Fragment() {
 

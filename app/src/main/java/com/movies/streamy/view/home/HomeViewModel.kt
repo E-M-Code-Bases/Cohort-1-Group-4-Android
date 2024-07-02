@@ -124,32 +124,3 @@ class HomeViewModel @Inject constructor(
         }
     }
 }
-
-
-//class TrailerModelProvider(val trailerImpl: TrailerImpl): ViewModelProvider.Factory{
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        return TrailerViewModel(trailerImpl) as T
-//    }
-//
-//}
-
-//class TrailerViewModel(private val trailerImpl: TrailerImpl): ViewModel(){
-//     val movieList = MutableLiveData<List<TrailerResult>>()
-//
-//    init {
-//        getMovieTrailer()
-//    }
-//    private fun getMovieTrailer(){
-//        viewModelScope.launch {
-//                try {
-//                    val response = trailerImpl.getTrailers()
-//                    if (response.invoke()!!.results.isNotEmpty()){
-//                            movieList.postValue(response.invoke()!!.results)
-//                    }
-//                }catch (t : Throwable){
-//                    println(t.message)
-//                }
-//        }
-//    }
-//
-//}

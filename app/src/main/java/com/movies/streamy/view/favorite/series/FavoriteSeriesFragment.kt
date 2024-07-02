@@ -11,7 +11,7 @@ import com.movies.streamy.databinding.FragmentFavoriteSeriesBinding
 import com.movies.streamy.room.favorites.FavMovieDB
 import com.movies.streamy.room.favorites.FavMovieDBRepository
 import com.movies.streamy.view.favorite.FavoriteViewState
-import com.movies.streamy.view.favorite.movies.FavoriteMoviesAdapter
+import com.movies.streamy.view.favorite.FavoriteMoviesAdapter
 
 
 class FavoriteSeriesFragment : Fragment() {
