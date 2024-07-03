@@ -34,7 +34,6 @@ import java.util.TimeZone
 import javax.inject.Singleton
 
 
-private const val key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MDRmNjM4MzcyODEzZmMwMDk4YzQzNGVmN2MyMTFjYSIsIm5iZiI6MTcxOTkwOTgyMS44NjU5MTQsInN1YiI6IjY2NjgzYjdhNDk5OTJkNjc3MjUxYmRhMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DRn14pbwSD-7SPe4PJlonwydZtvI2j4MK45OH4dK4j0"
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -102,9 +101,6 @@ object NetworkModule {
     fun provideTrailerImpl(trailerInterface: TrailerInterface): TrailerImpl {
         return TrailerImpl(trailerInterface)
     }
-
-
-
 }
 
 class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
@@ -142,28 +138,4 @@ class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
     }
 }
 
-
-object RetrofitInitializerNoDI{
-    fun getRetrofitInstance(): TrailerInterface{
-        val token = TokenInterceptor(key)
-        val client = OkHttpClient.Builder().addInterceptor(token).build()
-        val retrofit = Retrofit.Builder().baseUrl( BuildConfig.BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-
-        val apiService by lazy{
-            retrofit.create(TrailerInterface::class.java)
-        }
-
-        return apiService
-    }
-}
-
-class TokenInterceptor(private val token: String): Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
-        return chain.proceed(request)
-    }
-
-}
 
