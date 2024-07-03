@@ -34,12 +34,22 @@ class HomeViewModel @Inject constructor(
     val viewState: LiveData<HomeViewState>
         get() = _viewState
 
-
-    val movieTrailerList = MutableLiveData<List<TrailerResult>>()
-
     private val _trailerList = MutableLiveData<List<TrailerResult>>()
-    val trailerList: LiveData<List<TrailerResult>>
+     val trailerList: LiveData<List<TrailerResult>>
         get() = _trailerList
+
+    private val _trailerVisible = MutableLiveData(false)
+    val trailerVisible: LiveData<Boolean> get() = _trailerVisible
+
+
+
+    fun clearTrailerList() {
+        _trailerList.value = emptyList()
+    }
+
+    fun setTrailerVisible(visible: Boolean) {
+        _trailerVisible.value = visible
+    }
 
     fun getMovieLists() {
         _viewState.postValue(HomeViewState.Loading)
@@ -84,36 +94,14 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
-            };
+            }
         }
     }
-
-
-
-//class TrailerViewModel(private val trailerImpl: TrailerImpl) : ViewModel() {
-//    val movieList = MutableLiveData<List<TrailerResult>>()
-//
-//    init {
-//        getMovieTrailer()
-//    }
-//
-//    private fun getMovieTrailer() {
-//        viewModelScope.launch {
-//            try {
-//                val response = trailerImpl.getTrailers()
-//                response.invoke()?.let {
-//                    movieList.postValue(it.results)
-//                }
-//            } catch (t: Throwable) {
-//                Timber.e(t)
-//            }
-//        }
-//    }
-
 
     fun getTrailerByMovieId(movieId: Int) {
         viewModelScope.launch(ioDispatcher) {
             try {
+//            clearTrailerList()
                 val response = trailerRepository.getTrailerByMovieId(movieId)
                 response?.let {
                     _trailerList.postValue(it.results)
@@ -124,3 +112,4 @@ class HomeViewModel @Inject constructor(
         }
     }
 }
+

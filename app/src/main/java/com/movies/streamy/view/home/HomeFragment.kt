@@ -1,5 +1,3 @@
-//package com.movies.streamy.view.home
-
 package com.movies.streamy.view.home
 
 import HomeAdapter
@@ -31,7 +29,6 @@ import com.movies.streamy.room.favorites.FavoriteViewModelFactory
 import com.movies.streamy.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
@@ -64,15 +61,21 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
 
         binding.Trailler.setOnClickListener {
             selectedItem?.let { item ->
-                item.id?.let { it1 -> viewModel.getTrailerByMovieId(it1) }
+                item.id?.let { movieId ->
+                    viewModel.setTrailerVisible(true)
+                    viewModel.getTrailerByMovieId(movieId)
+                }
             }
         }
 
         viewModel.trailerList.observe(viewLifecycleOwner, Observer { trailerList ->
-            trailerList.firstOrNull()?.let { trailer ->
-                playTrailer(trailer)
-            } ?: run {
-                Toast.makeText(requireContext(), "Trailer not found", Toast.LENGTH_SHORT).show()
+            if (viewModel.trailerVisible.value == true) {
+                trailerList.firstOrNull()?.let { trailer ->
+                        playTrailer(trailer)
+                } ?: run {
+                    Toast.makeText(requireContext(), "Trailer not found", Toast.LENGTH_SHORT).show()
+                }
+                viewModel.setTrailerVisible(false)  // Reset trailer visibility after attempting to play
             }
         })
 
@@ -187,6 +190,8 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl))
         intent.putExtra("force_fullscreen", true)
         startActivity(intent)
+
+        viewModel.setTrailerVisible(false)  // Reset trailer visibility after playing
     }
 
     private fun addToFavorite(item: HomeResult) {
@@ -235,7 +240,6 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
 
     private fun showDetails(item: HomeResult) {
         Toast.makeText(context, "Show details", Toast.LENGTH_SHORT).show()
-        // Implement show details functionality
     }
 
     private fun applyScaleTransformation(recyclerView: RecyclerView) {
@@ -256,3 +260,4 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         }
     }
 }
+
