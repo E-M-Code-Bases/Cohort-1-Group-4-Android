@@ -17,6 +17,7 @@ import com.movies.streamy.databinding.FragmentMoviesPopularBinding
 import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
+import com.movies.streamy.view.moviedetails.PopularMovieDetailsFragment
 import com.movies.streamy.view.movies.adapters.PopularMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,7 +32,9 @@ class PopularMoviesFragment : Fragment() {
     private lateinit var prefs: Prefs
 
     private val popularMovieAdapter =
-        PopularMovieAdapter()
+        PopularMovieAdapter{
+            movie -> itemClicked(movie)
+        }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,46 +53,36 @@ class PopularMoviesFragment : Fragment() {
 
         showShimmerEffect()
 
+        binding.rvPopularMovies.apply {
+            hideShimmerEffect()
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            setHasFixedSize(false)
+            adapter = popularMovieAdapter
+        }
+
         viewModel.popularMovies.observe(viewLifecycleOwner, Observer{
             Log.d(TAG, it.toString())
             popularMovieAdapter.asyncList.submitList(it)
-            binding.rvPopularMovies.apply {
-                hideShimmerEffect()
-                layoutManager = GridLayoutManager(requireContext(), 3)
-                setHasFixedSize(false)
-                adapter = popularMovieAdapter
-            }
+
 
         })
 
         return binding.root
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-////        initViews()
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
 
-//    private fun initViews() {
-//        showShimmerEffect()
-//       // viewModel.getPopularMovies()
-//        setUpObservers()
-////        setUpAdapter()
-//    }
-//
-//    private fun setUpObservers() {
-//      //  observe(viewModel.popularMovies, ::setUpRecyclerView)
-//        observe(viewModel.viewState, ::onViewStateChanged)
-//    }
+    private fun initViews() {
+        showShimmerEffect()
+        setUpObservers()
+    }
 
-//    private fun setUpAdapter() {
-//        binding.rvMovies.apply {
-//            layoutManager = GridLayoutManager(requireContext(), 3)
-//            setHasFixedSize(false)
-//            adapter?.setHasStableIds(true)
-//            adapter = popularMovieAdapter
-//        }
-//    }
+    private fun setUpObservers() {
+        observe(viewModel.viewState, ::onViewStateChanged)
+    }
 
     private fun onViewStateChanged(state: MoviesViewState) {
         hideShimmerEffect()
@@ -124,7 +117,10 @@ class PopularMoviesFragment : Fragment() {
     }
 
     private fun itemClicked(data: PopularMovieResult) {
-        // Todo() Handle item click
+        val fragment = PopularMovieDetailsFragment.newInstance(data)
+        binding.frameTwo.visibility = View.GONE
+        val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
+        tras.commit()
     }
 
     override fun onDestroyView() {

@@ -2,6 +2,7 @@ package com.movies.streamy.model.dataSource.network.data.response
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class TopRatedMovieResponse(
     @SerializedName("page")
@@ -42,4 +43,4 @@ data class TopRatedMovieResult(
     val voteAverage: Double?,
     @SerializedName("vote_count")
     val voteCount: Int?
-)
+) : Serializable

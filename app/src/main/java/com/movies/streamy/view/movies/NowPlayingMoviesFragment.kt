@@ -13,17 +13,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.movies.streamy.R
-import com.movies.streamy.databinding.FragmentMoviesBinding
 import com.movies.streamy.databinding.FragmentMoviesNowPlayingBinding
 import com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult
-import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
+import com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment
 import com.movies.streamy.view.movies.adapters.NowPlayingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 private const val TAG = "nowplayingmovies"
+
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class NowPlayingMoviesFragment : Fragment() {
@@ -31,8 +31,9 @@ class NowPlayingMoviesFragment : Fragment() {
     private lateinit var viewModel: MoviesViewModel
     private lateinit var prefs: Prefs
 
-    private val nowPlayingMovieAdapter =
-        NowPlayingMovieAdapter()
+    private val nowPlayingMovieAdapter = NowPlayingMovieAdapter { movie ->
+        itemClicked(movie)
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,18 +49,15 @@ class NowPlayingMoviesFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies_now_playing, container, false)
         viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
 
-        //binding.viewModel = viewModel
-        //binding.lifecycleOwner = viewLifecycleOwner
+        binding.rvNowPlayingMovies.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            setHasFixedSize(false)
+            adapter = nowPlayingMovieAdapter
+        }
 
-        viewModel.nowPlayingMovies.observe(viewLifecycleOwner, Observer{
+        viewModel.nowPlayingMovies.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, it.toString())
             nowPlayingMovieAdapter.asyncList.submitList(it)
-            binding.rvNowPlayingMovies.apply {
-                layoutManager = GridLayoutManager(requireContext(), 3)
-                setHasFixedSize(false)
-                adapter = nowPlayingMovieAdapter
-            }
-
         })
 
         return binding.root
@@ -72,24 +70,12 @@ class NowPlayingMoviesFragment : Fragment() {
 
     private fun initViews() {
         showShimmerEffect()
-        // viewModel.getPopularMovies()
         setUpObservers()
-//        setUpAdapter()
     }
 
     private fun setUpObservers() {
-        //  observe(viewModel.popularMovies, ::setUpRecyclerView)
         observe(viewModel.viewState, ::onViewStateChanged)
     }
-
-//    private fun setUpAdapter() {
-//        binding.rvMovies.apply {
-//            layoutManager = GridLayoutManager(requireContext(), 3)
-//            setHasFixedSize(false)
-//            adapter?.setHasStableIds(true)
-//            adapter = nowPlayingMovieAdapter
-//        }
-//    }
 
     private fun onViewStateChanged(state: MoviesViewState) {
         hideShimmerEffect()
@@ -124,7 +110,10 @@ class NowPlayingMoviesFragment : Fragment() {
     }
 
     private fun itemClicked(data: NowPlayingMovieResult) {
-        // Todo() Handle item click
+        val fragment = NowPlayingMovieDetailsFragment.newInstance(data)
+        binding.frameTwo.visibility = View.GONE
+        val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
+        tras.commit()
     }
 
     override fun onDestroyView() {

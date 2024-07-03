@@ -15,6 +15,14 @@
         android:layout_height="match_parent"
         tools:context=".view.movies.NowPlayingMoviesFragment">
         <FrameLayout
+            android:id="@+id/frameOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+        <FrameLayout
+            android:id="@+id/frameTwo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="@color/black"

@@ -55,6 +55,8 @@ android {
         create("production") {
             resValue("string", "app_name", "Streamy")
             buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "POSTER_URL", "\"https://image.tmdb.org/t/p/w500\"")
+
             buildConfigField("String", "API_KEY", apiKey)
         }
     }
@@ -69,6 +71,7 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation("androidx.fragment:fragment-ktx:1.5.6")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
@@ -77,6 +80,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0-alpha02")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.exifinterface:exifinterface:1.3.4")
+
 
     // Retrofit dependencies
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

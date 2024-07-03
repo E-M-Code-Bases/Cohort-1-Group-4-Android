@@ -2,6 +2,7 @@ package com.movies.streamy.model.dataSource.network.data.response
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class NowPlayingMovieResponse(
     @SerializedName("dates")
@@ -41,10 +42,10 @@ data class NowPlayingMovieResult(
     @SerializedName("video")
     val video: Boolean?,
     @SerializedName("vote_average")
-    val voteAverage: String?,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
     val voteCount: Int?
-)
+): Serializable
 data class Dates(
     @SerializedName("maximum")
     val maximum: String?,

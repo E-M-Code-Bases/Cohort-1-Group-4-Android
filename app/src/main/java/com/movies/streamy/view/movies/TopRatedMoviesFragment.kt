@@ -14,13 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.movies.streamy.R
-import com.movies.streamy.databinding.FragmentMoviesBinding
 import com.movies.streamy.databinding.FragmentMoviesTopRatedBinding
-import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
 import com.movies.streamy.model.dataSource.network.data.response.TopRatedMovieResult
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
-import com.movies.streamy.view.movies.adapters.PopularMovieAdapter
+import com.movies.streamy.view.moviedetails.TopRatedMovieDetailsFragment
 import com.movies.streamy.view.movies.adapters.TopRatedMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +32,9 @@ class TopRatedMoviesFragment : Fragment() {
     private lateinit var prefs: Prefs
 
     private val topRatedMovieAdapter =
-        TopRatedMovieAdapter()
+        TopRatedMovieAdapter{
+            movie -> itemClicked(movie)
+        }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,24 +74,12 @@ class TopRatedMoviesFragment : Fragment() {
 
     private fun initViews() {
         showShimmerEffect()
-        // viewModel.getPopularMovies()
         setUpObservers()
-//        setUpAdapter()
     }
 
     private fun setUpObservers() {
-        //  observe(viewModel.popularMovies, ::setUpRecyclerView)
         observe(viewModel.viewState, ::onViewStateChanged)
     }
-
-//    private fun setUpAdapter() {
-//        binding.rvMovies.apply {
-//            layoutManager = GridLayoutManager(requireContext(), 3)
-//            setHasFixedSize(false)
-//            adapter?.setHasStableIds(true)
-//            adapter = topRatedMovieAdapter
-//        }
-//    }
 
     private fun onViewStateChanged(state: MoviesViewState) {
         hideShimmerEffect()
@@ -126,7 +114,10 @@ class TopRatedMoviesFragment : Fragment() {
     }
 
     private fun itemClicked(data: TopRatedMovieResult) {
-        // Todo() Handle item click
+        val fragment = TopRatedMovieDetailsFragment.newInstance(data)
+        binding.frameTwo.visibility = View.GONE
+        val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
+        tras.commit()
     }
 
     override fun onDestroyView() {

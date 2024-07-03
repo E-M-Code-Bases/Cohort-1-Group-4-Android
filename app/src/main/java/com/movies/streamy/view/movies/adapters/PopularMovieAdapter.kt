@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.movies.streamy.databinding.RowMovieItemBinding
+import com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult
 
-class PopularMovieAdapter :
+class PopularMovieAdapter(
+        private val onItemClicked: (PopularMovieResult) -> Unit
+) :
         RecyclerView.Adapter<PopularMovieAdapter.PopularMovieViewHolder>(
         ) {
 
@@ -45,8 +48,7 @@ class PopularMovieAdapter :
                 fun bind(data: PopularMovieResult) {
                         binding.apply {
                                 root.setOnClickListener {
-                                        // clicked.invoke(data)
-                                        // todo() we should navigate to a page details
+                                        onItemClicked(data)
                                 }
                                 tvTitle.text = data.title
 
@@ -54,8 +56,9 @@ class PopularMovieAdapter :
                                 Glide.with(posterImageView.context)
                                         .load(posterUrl)
                                         .into(posterImageView)
+                                val voteAverage = String.format("%.1f", data!!.voteAverage!!)
 
-                                movieRating.text = data.voteAverage?.toString()
+                                movieRating.text = voteAverage
                         }
                 }
         }
