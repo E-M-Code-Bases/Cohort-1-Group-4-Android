@@ -11,8 +11,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.movies.streamy.R
 import com.movies.streamy.databinding.FragmentMoviesBinding
 import com.movies.streamy.view.movies.adapters.MoviesPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MoviesFragment: Fragment() {
 
     private lateinit var binding: FragmentMoviesBinding

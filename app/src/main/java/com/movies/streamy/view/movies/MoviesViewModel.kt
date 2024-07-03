@@ -149,4 +149,8 @@ class MoviesViewModel @Inject constructor(
                 }
 
             }}}
+
+    fun getMovieDetails() {
+
+    }
 }

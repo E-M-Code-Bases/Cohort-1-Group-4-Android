@@ -1,5 +1,6 @@
 package com.movies.streamy.view.movies.adapters
 
+import com.movies.streamy.databinding.RowMovieItemBinding
 import com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +8,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.movies.streamy.databinding.RowMovieItemBinding
 
-class NowPlayingMovieAdapter :
+class NowPlayingMovieAdapter(
+    private val onItemClicked: (NowPlayingMovieResult) -> Unit
+) :
     RecyclerView.Adapter<NowPlayingMovieAdapter.NowPlayingMovieViewHolder>(
     ) {
 
@@ -45,12 +47,14 @@ class NowPlayingMovieAdapter :
         fun bind(data: NowPlayingMovieResult) {
             binding.apply {
                 root.setOnClickListener {
-                    //clicked.invoke(data)
-                    // todo()we should navigate to a page details
+                    onItemClicked(data)
                 }
-                tvTitle.text = data.title
+                tvTitle.text = data!!.title
 
-                movieRating.text = data.voteAverage
+                val voteAverage = String.format("%.1f", data!!.voteAverage!!)
+
+                movieRating.text = voteAverage
+
 
                 val posterUrl = "https://image.tmdb.org/t/p/w500${data.posterPath}"
                 Glide.with(posterImageView.context)

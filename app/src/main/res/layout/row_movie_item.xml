@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult"/>
+        <variable
+            name="movie"
+            type="NowPlayingMovieResult" />
     </data>
 
     <LinearLayout
