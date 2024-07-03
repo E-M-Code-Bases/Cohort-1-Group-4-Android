@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.navigation_home,
                 R.id.navigation_series,
-                R.id.navigation_movie,
+                R.id.navigation_movies,
                 R.id.navigation_profile
             )
         )

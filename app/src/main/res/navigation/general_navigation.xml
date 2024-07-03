@@ -35,10 +35,10 @@
         android:name="com.movies.streamy.view.movies.NowPlayingMoviesFragment">
         <action
             android:id="@+id/actionNowPlayingMoviesFragmentToMovieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
+            app:destination="@id/nowPlayingMovieDetailsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/movieDetailsFragment"
-        android:name="com.movies.streamy.view.moviedetails.MovieDetailsFragment" />
+        android:id="@+id/nowPlayingMovieDetailsFragment"
+        android:name="com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment" />
 </navigation>
