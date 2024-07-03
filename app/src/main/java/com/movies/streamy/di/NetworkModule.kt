@@ -11,6 +11,8 @@ import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.movies.streamy.BuildConfig
+import com.movies.streamy.model.dataSource.implementation.TrailerImpl
+import com.movies.streamy.model.dataSource.network.apiService.TrailerInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +31,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -64,7 +68,6 @@ object NetworkModule {
             .build()
     }
 
-
     @Provides
     fun provideConverterFactory(): Converter.Factory {
         val gson: Gson =
@@ -87,6 +90,17 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
 
+    @Provides
+    @Singleton
+    fun provideTrailerInterface(retrofit: Retrofit): TrailerInterface {
+        return retrofit.create(TrailerInterface::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrailerImpl(trailerInterface: TrailerInterface): TrailerImpl {
+        return TrailerImpl(trailerInterface)
+    }
 }
 
 class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
@@ -123,3 +137,5 @@ class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 }
+
+

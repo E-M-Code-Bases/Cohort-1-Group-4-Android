@@ -32,7 +32,7 @@ object MoviesModule {
     @Provides
 
     fun provideSeriesApiService
-            (retrofit: Retrofit)
+                (retrofit: Retrofit)
             : SeriesApiInterface = retrofit.create(SeriesApiInterface::class.java)
 
 }

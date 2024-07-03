@@ -1,27 +1,23 @@
-package com.movies.streamy.view.movies
+package com.movies.streamy.view.favorite
 
-sealed class MoviesViewState {
-
+sealed class FavoriteViewState {
     /**
      * Network state loading.
      */
-    object Loading : MoviesViewState()
+    object Loading : FavoriteViewState ()
 
     /**
      * Network state Success.
      */
-
-    object Success : MoviesViewState()
-
+    object Success : FavoriteViewState ()
 
     /**
      * Error occurred state.
      */
-
     data class Error(
         val errorMessage: String?,
         val stringResourceId: Int?,
         val errorCode: Int?
-    ) : MoviesViewState()
+    ) : FavoriteViewState ()
 
 }

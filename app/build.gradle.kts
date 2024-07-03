@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+//    id("com.google.gms.google-services")
 }
 
 android {
@@ -47,7 +48,6 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
 
     }
-
     val apiKey: String = gradleLocalProperties(rootDir).getProperty("API_KEY")
 
     flavorDimensions("api")
@@ -62,6 +62,8 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.21")
     implementation("androidx.core:core-ktx:1.10.1")
@@ -71,7 +73,9 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.firebase:firebase-database:21.0.0")
     implementation("androidx.fragment:fragment-ktx:1.5.6")
+
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
@@ -132,6 +136,14 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+
+    //image glider
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+
+
 }
 
 kapt {
