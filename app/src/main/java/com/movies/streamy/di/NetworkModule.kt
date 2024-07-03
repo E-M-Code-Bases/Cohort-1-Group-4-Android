@@ -40,7 +40,7 @@ private const val key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MDRmNjM4MzcyODEzZmMwMD
 object NetworkModule {
 
     private fun baseUrl() = BuildConfig.BASE_URL
-
+    val token = ProvidesTokenInterceptor()
 
     @Provides
     fun providesLoggingInterceptor(): HttpLoggingInterceptor {
@@ -52,11 +52,19 @@ object NetworkModule {
         }
         return loggingInterceptor
     }
+    class ProvidesTokenInterceptor(): Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val req = chain.request().newBuilder().addHeader("Authorization", "Bearer ${BuildConfig.API_KEY}").build()
+            return chain.proceed(req)
+        }
+
+    }
 
     @ProvideOkHttpClient
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(token)
             .addInterceptor(loggingInterceptor)
             .build()
     }
@@ -77,7 +85,7 @@ object NetworkModule {
         converterFactory: Converter.Factory,
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(baseUrl())
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(converterFactory)
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .client(okHttpClient)
@@ -133,6 +141,7 @@ class GsonUTCDateAdapter : JsonSerializer<Date?>, JsonDeserializer<Date?> {
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 }
+
 
 object RetrofitInitializerNoDI{
     fun getRetrofitInstance(): TrailerInterface{
