@@ -53,14 +53,16 @@ class TopRatedMoviesFragment : Fragment() {
         //binding.viewModel = viewModel
         //binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer{
-            Log.d(TAG, it.toString())
-            topRatedMovieAdapter.asyncList.submitList(it)
+
             binding.rvTopRatedMovies.apply {
                 layoutManager = GridLayoutManager(requireContext(), 3)
                 setHasFixedSize(false)
                 adapter = topRatedMovieAdapter
             }
+            binding.frameOne.visibility = View.GONE
+            viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer{
+            Log.d(TAG, it.toString())
+            topRatedMovieAdapter.asyncList.submitList(it)
 
         })
 
@@ -115,6 +117,7 @@ class TopRatedMoviesFragment : Fragment() {
 
     private fun itemClicked(data: TopRatedMovieResult) {
         val fragment = TopRatedMovieDetailsFragment.newInstance(data)
+        binding.frameOne.visibility = View.VISIBLE
         binding.frameTwo.visibility = View.GONE
         val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
         tras.commit()

@@ -54,6 +54,7 @@ class NowPlayingMoviesFragment : Fragment() {
             setHasFixedSize(false)
             adapter = nowPlayingMovieAdapter
         }
+        binding.frameOne.visibility = View.GONE
 
         viewModel.nowPlayingMovies.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, it.toString())
@@ -111,6 +112,7 @@ class NowPlayingMoviesFragment : Fragment() {
 
     private fun itemClicked(data: NowPlayingMovieResult) {
         val fragment = NowPlayingMovieDetailsFragment.newInstance(data)
+        binding.frameOne.visibility = View.VISIBLE
         binding.frameTwo.visibility = View.GONE
         val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
         tras.commit()

@@ -40,6 +40,10 @@ class TrendingSeriesAdapter(private val clicked: (SeriesTrending) -> Unit) :
                 Glide.with(imageItem.context)
                     .load(posterUrl)
                     .into(imageItem)
+
+                val voteAverage = String.format("%.1f", data!!.voteAverage!!)
+
+                movieRating.text = voteAverage
                 title.text = data.name
             }
         }
