@@ -1,7 +1,6 @@
 package com.movies.streamy.model.dataSource.implementation
 
 import com.haroldadmin.cnradapter.NetworkResponse
-import com.movies.streamy.BuildConfig
 import com.movies.streamy.model.dataSource.abstraction.IHomeDataSource
 import com.movies.streamy.model.dataSource.network.apiService.HomeApiInterface
 import com.movies.streamy.model.dataSource.network.apiService.TrailerInterface

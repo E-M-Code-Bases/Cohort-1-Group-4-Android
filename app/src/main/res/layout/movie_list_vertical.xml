@@ -52,7 +52,7 @@
         <TextView
             style="@style/CustomTextStyle"
             android:id="@+id/textYear"
-            android:text="Date: "
+            android:text="@string/Date"
             app:layout_constraintTop_toBottomOf="@id/Type"
             app:layout_constraintStart_toEndOf="@id/image"
          />
@@ -60,7 +60,7 @@
         <TextView
             android:id="@+id/year"
             style="@style/CustomTextStyle"
-            android:text="Date :"
+            android:text="@string/Date"
             app:layout_constraintTop_toBottomOf="@id/Type"
             app:layout_constraintStart_toEndOf="@id/textYear"
 
@@ -68,7 +68,7 @@
         <TextView
             style="@style/CustomTextStyle"
             android:id="@+id/textlanguage"
-            android:text="Language"
+            android:text="@string/Language"
             app:layout_constraintTop_toBottomOf="@id/year"
             app:layout_constraintStart_toEndOf="@id/image"
         />
@@ -76,7 +76,7 @@
         <TextView
             android:id="@+id/language"
             style="@style/CustomTextStyle"
-            android:text="Language"
+            android:text="@string/Language"
             app:layout_constraintTop_toBottomOf="@id/year"
             app:layout_constraintStart_toEndOf="@id/textlanguage"
             />
@@ -84,7 +84,7 @@
 
         <TextView
             style="@style/CustomTextStyle"
-            android:text="Rating"
+            android:text="@string/Rating"
             android:id="@+id/textVote"
             app:layout_constraintTop_toBottomOf="@+id/language"
             app:layout_constraintStart_toEndOf="@+id/image"
@@ -94,7 +94,7 @@
         <TextView
             android:id="@+id/genre"
             style="@style/CustomTextStyle"
-            android:text="Rating"
+            android:text="@string/Rating"
             app:layout_constraintTop_toBottomOf="@+id/language"
             app:layout_constraintStart_toEndOf="@id/textVote"
          />
