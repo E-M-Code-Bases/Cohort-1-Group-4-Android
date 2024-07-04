@@ -42,8 +42,9 @@ class HomeAdapter(private val itemClickListener: OnItemClickListener) : Recycler
         }
         fun bind(data: HomeResult) {
             binding.MovieName.text = data.name ?: data.title
-            binding.Type.text = data.media_type
-            binding.genre.text = data.vote_count.toString()
+
+            val Rating = String.format("%.1f", data!!.vote_average!!)
+            binding.Rating.text = Rating
             val posterUrl = "https://image.tmdb.org/t/p/w500${data.poster_path}"
             Glide.with(binding.image.context)
                 .load(posterUrl)

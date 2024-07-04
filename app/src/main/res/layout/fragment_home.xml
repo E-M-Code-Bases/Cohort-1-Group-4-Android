@@ -18,10 +18,15 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Streamy"
+            app:title="@string/title_activity_main2"
             app:titleTextColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/toolbar"/>
+        <FrameLayout
+            android:id="@+id/frameOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 
         <androidx.core.widget.NestedScrollView
@@ -30,11 +35,25 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
            >
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/Homepage"
 
               >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:text="@string/Trending"
+    app:layout_constraintBottom_toTopOf="@+id/AllShows"
+    android:textColor="@color/white"
+    android:textSize="20sp"
+    android:paddingBottom="10dp"
+    />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/AllShows"
             android:layout_width="wrap_content"
@@ -69,7 +88,7 @@
 
             <TextView
                 android:id="@+id/detail"
-                android:text="Detail"
+                android:text="@string/Detail"
                 app:layout_constraintStart_toStartOf="@id/detailIcon"
                 app:layout_constraintEnd_toEndOf="@id/detailIcon"
                 app:layout_constraintTop_toBottomOf="@id/detailIcon"
@@ -81,7 +100,7 @@
                 android:id="@+id/Trailler"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Play Trailer"
+                android:text="@string/Trailer"
                 android:background="@drawable/button"
                 android:textStyle="bold"
                 android:padding="10dp"
@@ -103,7 +122,7 @@
             <TextView
                 android:id="@+id/fav"
                 style="@style/CustomTextStyle"
-                android:text="Favorite"
+                android:text="@string/Favorite"
                 app:layout_constraintStart_toStartOf="@id/FavIcon"
                 app:layout_constraintTop_toBottomOf="@+id/FavIcon"
                 app:layout_constraintEnd_toEndOf="@id/FavIcon"/>
