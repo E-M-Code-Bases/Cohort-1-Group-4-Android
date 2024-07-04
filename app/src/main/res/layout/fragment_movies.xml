@@ -11,14 +11,42 @@
         android:layout_height="match_parent"
         android:background="#000000">
 
+        <LinearLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_series_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movies"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:padding="2dp"
+                app:tint="@color/white" />
+        </LinearLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#000000"
             app:tabTextColor="#FFFFFF"
-            app:tabSelectedTextColor="#B6E83D"
-            app:tabIndicatorColor="#B6E83D">
+            android:layout_below="@+id/toolbar"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/nowPlaying"

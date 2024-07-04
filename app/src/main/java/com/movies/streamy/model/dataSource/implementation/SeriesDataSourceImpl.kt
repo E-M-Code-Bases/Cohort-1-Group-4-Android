@@ -17,18 +17,18 @@ class SeriesDataSourceImpl @Inject constructor(
 ) : SeriesDataSource {
 
     override suspend fun getTvSeriesIds(): NetworkResponse<TvseriesResponse, ErrorResponse> {
-        return seriesApiInterface.getTvSeriesId(1, BuildConfig.API_KEY)
+        return seriesApiInterface.getTvSeriesId()
     }
 
     override suspend fun getPopularSeriesIds(): NetworkResponse<TvSeriesPopularResponse, ErrorResponse> {
-        return seriesApiInterface.getPopularSeries(1, BuildConfig.API_KEY)
+        return seriesApiInterface.getPopularSeries()
     }
 
     override suspend fun getTrendingSeriesIds(): NetworkResponse<TvSeriesTrendingResponse, ErrorResponse> {
-        return seriesApiInterface.getTrendingSeries(1, BuildConfig.API_KEY)
+        return seriesApiInterface.getTrendingSeries()
     }
 
     override suspend fun getLatestSeriesIds(): NetworkResponse<TvSeriesLatestResponse, ErrorResponse> {
-        return seriesApiInterface.getLatestSeries(1, BuildConfig.API_KEY)
+        return seriesApiInterface.getLatestSeries()
     }
 }
