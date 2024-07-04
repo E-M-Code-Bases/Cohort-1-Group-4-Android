@@ -1,6 +1,7 @@
 package com.movies.streamy.model.dataSource.network.data.response.homeData
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class HomeResult(
     @SerializedName("adult")
@@ -41,4 +42,4 @@ data class HomeResult(
     val vote_average: Double?,
     @SerializedName("vote_count")
     val vote_count: Int?
-)
+) : Serializable

@@ -27,6 +27,8 @@ import com.movies.streamy.room.favorites.FavMovieDBViewModel
 import com.movies.streamy.room.favorites.FavMovieEntity
 import com.movies.streamy.room.favorites.FavoriteViewModelFactory
 import com.movies.streamy.utils.Prefs
+import androidx.navigation.fragment.findNavController
+import com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
@@ -67,6 +69,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
                 }
             }
         }
+        binding.frameOne.visibility = View.GONE
 
         viewModel.trailerList.observe(viewLifecycleOwner, Observer { trailerList ->
             if (viewModel.trailerVisible.value == true) {
@@ -239,8 +242,14 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
     }
 
     private fun showDetails(item: HomeResult) {
-        Toast.makeText(context, "Show details", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, "Show details", Toast.LENGTH_SHORT).show()
+        val fragment = HomeTrendingDetails.newInstance(item)
+        binding.frameOne.visibility = View.VISIBLE
+        binding.Homepage.visibility = View.GONE
+        val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
+        tras.commit()
     }
+
 
     private fun applyScaleTransformation(recyclerView: RecyclerView) {
         val layoutManager = recyclerView.layoutManager as LinearLayoutManager

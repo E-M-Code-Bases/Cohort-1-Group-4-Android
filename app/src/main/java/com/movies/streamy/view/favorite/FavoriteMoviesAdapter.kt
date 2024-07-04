@@ -29,7 +29,9 @@ class FavoriteMoviesAdapter : ListAdapter<FavMovieEntity, FavoriteMoviesAdapter.
             binding.Type.text = data.media_type
             binding.year.text = data.first_air_date ?: data.release_date
             binding.language.text = data.original_language
-            binding.genre.text = data.popularity.toString()
+            val Rating = String.format("%.1f", data!!.vote_average!!)
+            binding.Rating.text = Rating
+
             val posterUrl = "https://image.tmdb.org/t/p/w500${data.poster_path}"
             Glide.with(binding.image.context)
                 .load(posterUrl)
