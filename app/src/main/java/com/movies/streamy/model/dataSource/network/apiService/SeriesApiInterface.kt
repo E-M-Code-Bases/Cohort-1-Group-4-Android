@@ -10,26 +10,26 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SeriesApiInterface {
-    @GET("3/genre/tv/list")
+    @GET("genre/tv/list")
     suspend fun getTvSeriesId(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String?
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): NetworkResponse<TvseriesResponse, ErrorResponse>
 
-     @GET("3/tv/top_rated")
+     @GET("tv/top_rated")
     suspend fun getTrendingSeries(
-    @Query("page") page: Int,
-    @Query("api_key") apiKey: String?
+    @Query("page") page: Int = 1,
+    @Query("language") language: String = "en-US"
     ): NetworkResponse<TvSeriesTrendingResponse, ErrorResponse>
 
-    @GET("3/tv/popular")
+    @GET("tv/popular")
     suspend fun getPopularSeries(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String?
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): NetworkResponse<TvSeriesPopularResponse, ErrorResponse>
-    @GET("3/tv/airing_today")
+    @GET("tv/airing_today")
     suspend fun getLatestSeries(
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String?
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
     ): NetworkResponse<TvSeriesLatestResponse, ErrorResponse>
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.movies.streamy.BuildConfig
+import com.movies.streamy.R
 import com.movies.streamy.databinding.MovieDetailsItemBinding
 import com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult
 import com.movies.streamy.view.MainActivity
@@ -34,6 +35,7 @@ class NowPlayingMovieDetailsFragment : Fragment() {
         binding = MovieDetailsItemBinding.inflate(inflater, container, false)
 
         binding.backPress.setOnClickListener{
+
             val intent = Intent(requireContext(), MainActivity::class.java)
             requireContext().startActivity(intent)
         }

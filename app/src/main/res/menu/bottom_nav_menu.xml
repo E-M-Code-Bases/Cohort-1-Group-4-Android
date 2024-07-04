@@ -11,7 +11,7 @@
         android:id="@+id/navigation_series"
         android:icon="@drawable/baseline_cast_24"
         android:title="@string/title_series"
-        android:iconTint="@color/white"/>
+        android:iconTint="@color/white" />
     <item
         android:id="@+id/navigation_movies"
         android:icon="@drawable/baseline_airplay_24"

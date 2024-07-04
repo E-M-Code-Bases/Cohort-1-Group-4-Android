@@ -43,6 +43,10 @@ class LatestSeriesAdapter(private val clicked: (Series: SeriesLatest) -> Unit) :
                     .load(posterUrl)
                     .into(imageItem)
                 title.text = data.name
+
+                val voteAverage = String.format("%.1f", data!!.voteAverage!!)
+
+                movieRating.text = voteAverage
             }
 
         }
