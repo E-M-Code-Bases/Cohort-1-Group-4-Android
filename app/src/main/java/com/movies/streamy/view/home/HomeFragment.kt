@@ -27,8 +27,6 @@ import com.movies.streamy.room.favorites.FavMovieDBViewModel
 import com.movies.streamy.room.favorites.FavMovieEntity
 import com.movies.streamy.room.favorites.FavoriteViewModelFactory
 import com.movies.streamy.utils.Prefs
-import androidx.navigation.fragment.findNavController
-import com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
@@ -53,7 +51,6 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         val factory = FavoriteViewModelFactory(repository)
         favViewModel = ViewModelProvider(this, factory).get(FavMovieDBViewModel::class.java)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,7 +62,11 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
             selectedItem?.let { item ->
                 item.id?.let { movieId ->
                     viewModel.setTrailerVisible(true)
-                    viewModel.getTrailerByMovieId(movieId)
+                    if (item.media_type == "movie") {
+                        viewModel.getTrailerByMovieId(movieId)
+                    } else if (item.media_type == "tv") {
+                        viewModel.getTrailerBySeriesId(movieId)
+                    }
                 }
             }
         }
@@ -78,10 +79,9 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
                 } ?: run {
                     Toast.makeText(requireContext(), "Trailer not found", Toast.LENGTH_SHORT).show()
                 }
-                viewModel.setTrailerVisible(false)  // Reset trailer visibility after attempting to play
+                viewModel.setTrailerVisible(false)
             }
         })
-
         binding.lifecycleOwner = viewLifecycleOwner
         homeAdapter = HomeAdapter(this)
 

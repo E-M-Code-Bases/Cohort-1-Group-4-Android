@@ -17,4 +17,10 @@ interface TrailerInterface {
         @Path("movie_id") movieId: Int,
         @Query("language") language: String? = "en-US",
     ): NetworkResponse<PlayTrailerResponse, ErrorResponse>
+
+    @GET("tv/{movie_id}/videos")
+    suspend fun playSeriesTrailer(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: String? = "en-US",
+    ): NetworkResponse<PlayTrailerResponse, ErrorResponse>
 }

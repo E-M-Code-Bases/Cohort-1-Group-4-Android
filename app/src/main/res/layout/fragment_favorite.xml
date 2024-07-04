@@ -30,17 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/iv_btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="20dp"
-                    android:contentDescription="@string/image"
-                    android:src="@drawable/ic_arrow_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white" />
+
 
                 <TextView
                     android:id="@+id/time"
@@ -53,10 +43,11 @@
                     android:textAlignment="viewStart"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_h7_size"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_btn_back"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_btn_back"
-                    app:layout_constraintTop_toTopOf="@+id/iv_btn_back" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                   />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

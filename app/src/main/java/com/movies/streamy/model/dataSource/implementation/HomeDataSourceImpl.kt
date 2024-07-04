@@ -25,5 +25,12 @@ class TrailerImpl(private val trailerInterface: TrailerInterface) {
             else -> null
         }
     }
-}
+        suspend fun getTrailerBySeriesId(seriesId: Int): PlayTrailerResponse? {
+            return when (val response = trailerInterface.playSeriesTrailer(seriesId)) {
+                is NetworkResponse.Success -> response.body
+                else -> null
+            }
+        }
+    }
+
 

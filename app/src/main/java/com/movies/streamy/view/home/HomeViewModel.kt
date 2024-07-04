@@ -106,6 +106,22 @@ class HomeViewModel @Inject constructor(
                 response?.let {
                     _trailerList.postValue(it.results)
                 }
+
+
+            } catch (t: Throwable) {
+                Timber.e(t)
+            }
+        }
+    }
+
+    fun getTrailerBySeriesId(seriesId: Int) {
+        viewModelScope.launch(ioDispatcher) {
+            try {
+
+                val response = trailerRepository.getTrailerBySeriesId(seriesId)
+                response?.let {
+                    _trailerList.postValue(it.results)
+                }
             } catch (t: Throwable) {
                 Timber.e(t)
             }

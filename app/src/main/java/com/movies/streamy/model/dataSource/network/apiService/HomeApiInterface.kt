@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.movies.streamy.model.dataSource.network.data.response.ErrorResponse
 import com.movies.streamy.model.dataSource.network.data.response.homeData.HomeTrendingResponse
 import com.movies.streamy.model.dataSource.network.data.response.homeData.PlayTrailerResponse
+import com.movies.streamy.model.dataSource.network.data.response.homeData.SearchAllResponse
 import com.movies.streamy.model.dataSource.network.data.response.homeData.TrailerResult
 import retrofit2.Response
 import retrofit2.http.GET
@@ -17,7 +18,13 @@ interface HomeApiInterface {
     ): NetworkResponse<HomeTrendingResponse, ErrorResponse>
 
 
-
+    @GET("search/collection")
+    fun searchAll(
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean,
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
+    ): NetworkResponse<SearchAllResponse, ErrorResponse>
 
 
 }
