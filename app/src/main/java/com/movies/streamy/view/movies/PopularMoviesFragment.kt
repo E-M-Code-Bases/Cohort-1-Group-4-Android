@@ -60,6 +60,8 @@ class PopularMoviesFragment : Fragment() {
             adapter = popularMovieAdapter
         }
 
+        binding.frameOne.visibility = View.GONE
+
         viewModel.popularMovies.observe(viewLifecycleOwner, Observer{
             Log.d(TAG, it.toString())
             popularMovieAdapter.asyncList.submitList(it)
@@ -118,6 +120,7 @@ class PopularMoviesFragment : Fragment() {
 
     private fun itemClicked(data: PopularMovieResult) {
         val fragment = PopularMovieDetailsFragment.newInstance(data)
+        binding.frameOne.visibility = View.VISIBLE
         binding.frameTwo.visibility = View.GONE
         val tras = childFragmentManager.beginTransaction().replace(binding.frameOne.id, fragment)
         tras.commit()
