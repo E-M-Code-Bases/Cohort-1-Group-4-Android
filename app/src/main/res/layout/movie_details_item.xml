@@ -40,6 +40,18 @@
                         android:layout_margin="20dp"
                         android:src="@drawable/ic_arrow_back"/>
 
+                    <ImageView
+                        android:id="@+id/play_button"
+                        android:layout_width="58dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="300dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:src="@drawable/play_outline_filled_carbon" />
+
                     <TextView
                         style="@style/TextAppearance.AppCompat.Title"
                         android:id="@+id/MovieTitle"
@@ -75,6 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_below="@+id/ll1"
                     android:padding="8dp">
                     <TextView
                         style="@style/TextAppearance.AppCompat.Title"
@@ -86,7 +99,7 @@
 
                     <TextView
                         android:id="@+id/Type"
-                        style="@style/TextAppearance.AppCompat.Title"
+                        android:fontFamily="sans-serif"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -99,7 +112,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_below="@+id/ll7"
                     android:padding="8dp">
 
                     <TextView
@@ -120,14 +132,15 @@
                         android:textSize="18sp"
                         />
                 </LinearLayout>
-
                 <LinearLayout
-                    android:id="@+id/ll2"
+                    android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/ll1"
+                    android:layout_below="@id/ll7"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:layout_marginTop="0dp"
+                    android:paddingBottom="0dp">
 
                     <TextView
                         style="@style/TextAppearance.AppCompat.Title"
@@ -136,16 +149,27 @@
                         android:text="Overview : "
                         android:textColor="@color/white"
                         android:textSize="16sp" />
-
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ll"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:layout_marginTop="0dp"
+                    android:paddingTop="0dp">
                     <TextView
                         android:id="@+id/overview"
-                        style="@style/TextAppearance.AppCompat.Title"
+                        android:fontFamily="sans-serif"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="overview"
                         android:textColor="@color/white"
                         android:textSize="16sp"
+                        android:justificationMode="inter_word"
                         tools:text="Movie Overview" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -166,7 +190,7 @@
 
                     <TextView
                         android:id="@+id/MovieRating"
-                        style="@style/TextAppearance.AppCompat.Title"
+                        android:fontFamily="sans-serif"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -192,7 +216,7 @@
 
                     <TextView
                         android:id="@+id/voteCount"
-                        style="@style/TextAppearance.AppCompat.Title"
+                        android:fontFamily="sans-serif"
                         android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -218,7 +242,7 @@
 
                     <TextView
                         android:id="@+id/releaseDate"
-                        style="@style/TextAppearance.AppCompat.Title"
+                        android:fontFamily="sans-serif"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
