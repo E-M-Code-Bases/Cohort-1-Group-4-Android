@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data><variable
+    <data>
+        <variable
         name="viewModel"
         type="com.movies.streamy.view.home.HomeViewModel" />
 
@@ -39,20 +40,20 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/Homepage"
+                android:id="@+id/Homepage">
 
-              >
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    android:text="@string/Trending"
-    app:layout_constraintBottom_toTopOf="@+id/AllShows"
-    android:textColor="@color/white"
-    android:textSize="20sp"
-    android:paddingBottom="10dp"
-    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/Trending"
+                    app:layout_constraintBottom_toTopOf="@+id/AllShows"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:paddingBottom="10dp"
+                    />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/AllShows"
