@@ -30,7 +30,7 @@ import com.movies.streamy.utils.Prefs
 import androidx.navigation.fragment.findNavController
 import com.movies.streamy.model.dataSource.network.data.response.PopularMovieResult
 import com.movies.streamy.model.dataSource.network.data.response.SeriesPopular
-import com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment
+import com.movies.streamy.view.movies.moviedetails.NowPlayingMovieDetailsFragment
 import com.movies.streamy.view.movies.adapters.NowPlayingMovieAdapter
 import com.movies.streamy.view.movies.adapters.PopularMovieAdapter
 import com.movies.streamy.view.series.Adapters.LatestSeriesAdapter

@@ -14,7 +14,7 @@ import com.movies.streamy.databinding.MovieDetailsItemBinding
 import com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult
 import com.movies.streamy.model.dataSource.network.data.response.SeriesLatest
 import com.movies.streamy.view.MainActivity
-import com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment
+import com.movies.streamy.view.movies.moviedetails.NowPlayingMovieDetailsFragment
 
 class LatestSeriesDetailsFragment : Fragment() {
     private val SeriesName = "series"

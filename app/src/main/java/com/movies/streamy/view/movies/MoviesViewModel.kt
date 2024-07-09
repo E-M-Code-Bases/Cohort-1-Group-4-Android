@@ -161,15 +161,6 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-//                    if (body != null) {
-//                        val results = body.results
-//                        if (results != null) {
-//                            _nowPlayingMovies.postValue(results as List<NowPlayingMovieResult>?)
-//                        } else {
-//                            // Handle the case where results are null
-//                        }
-
-
     fun getNowPlayingMovies2(){
         _viewState.postValue(MoviesViewState.Loading)
         viewModelScope.launch(iODispatcher) {

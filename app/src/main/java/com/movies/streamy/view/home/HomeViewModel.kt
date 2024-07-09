@@ -19,6 +19,7 @@ import com.movies.streamy.model.repository.abstraction.IHomeRepository
 import com.movies.streamy.model.repository.implementation.MoviesRepositoryImpl
 import com.movies.streamy.model.repository.implementation.SeriesRepositoryImpl
 import com.movies.streamy.utils.AppUtil
+import com.movies.streamy.view.movies.MoviesViewState
 import com.movies.streamy.view.series.SeriesViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -220,15 +221,23 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-    fun getPopularMovies() {
+
+    fun getPopularMovies(){
         _viewState.postValue(HomeViewState.Loading)
         viewModelScope.launch(ioDispatcher) {
-            try {
-                val response = moviesRepository.getPopularMovies()
-                if (response.isSuccessful) {
+            val result = executeWithRetry(times = 3){
+                moviesRepository.getPopularMovies()
+            }
+            when (result) {
+                is NetworkResponse.Success -> {
                     _viewState.postValue(HomeViewState.Success)
-                    _popularMovie.postValue(response.body()!!.results)
-                } else {
+
+                    val data = result.body
+
+                    _popularMovie.postValue(data.results)
+                }
+
+                is NetworkResponse.NetworkError -> {
                     _viewState.postValue(
                         HomeViewState.Error(
                             null,
@@ -237,28 +246,42 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
-            } catch (t: Throwable) {
-                Timber.e(t)
-                _viewState.postValue(
-                    HomeViewState.Error(
-                        null,
-                        R.string.unknown_error_msg,
-                        null
+
+                is NetworkResponse.ServerError -> {
+                    _viewState.postValue(
+                        HomeViewState.Error(
+                            AppUtil.getErrorResponse(result.body),
+                            null,
+                            null
+                        )
                     )
-                )
+                }
+
+                is NetworkResponse.UnknownError -> {
+                    _viewState.postValue(
+                        HomeViewState.Error(
+                            null,
+                            R.string.unknown_error_msg,
+                            null
+                        )
+                    )
+                }
             }
         }
     }
-
-    fun getLatestMovies() {
+    fun getLatestMovies(){
         _viewState.postValue(HomeViewState.Loading)
         viewModelScope.launch(ioDispatcher) {
-            try {
-                val response = moviesRepository. getNowPlayingMovies()
-                if (response.isSuccessful) {
+            val result = executeWithRetry(times = 3){
+                moviesRepository.getNowPlayingMovies()
+            }
+            when (result) {
+                is NetworkResponse.Success -> {
                     _viewState.postValue(HomeViewState.Success)
-                    _latestMovie.postValue(response.body()!!.results)
-                } else {
+                    val data = result.body
+                    _latestMovie.postValue(data.results as List<NowPlayingMovieResult>?)
+                }
+                is NetworkResponse.NetworkError -> {
                     _viewState.postValue(
                         HomeViewState.Error(
                             null,
@@ -267,15 +290,26 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
-            } catch (t: Throwable) {
-                Timber.e(t)
-                _viewState.postValue(
-                    HomeViewState.Error(
-                        null,
-                        R.string.unknown_error_msg,
-                        null
+
+                is NetworkResponse.ServerError -> {
+                    _viewState.postValue(
+                        HomeViewState.Error(
+                            AppUtil.getErrorResponse(result.body),
+                            null,
+                            null
+                        )
                     )
-                )
+                }
+
+                is NetworkResponse.UnknownError -> {
+                    _viewState.postValue(
+                        HomeViewState.Error(
+                            null,
+                            R.string.unknown_error_msg,
+                            null
+                        )
+                    )
+                }
             }
         }
     }

@@ -17,7 +17,7 @@ import com.movies.streamy.databinding.FragmentMoviesNowPlayingBinding
 import com.movies.streamy.model.dataSource.network.data.response.NowPlayingMovieResult
 import com.movies.streamy.utils.Prefs
 import com.movies.streamy.utils.observe
-import com.movies.streamy.view.moviedetails.NowPlayingMovieDetailsFragment
+import com.movies.streamy.view.movies.moviedetails.NowPlayingMovieDetailsFragment
 import com.movies.streamy.view.movies.adapters.NowPlayingMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
