@@ -39,6 +39,12 @@ interface MoviesApiInterface {
         @Query("language") language: String = "en-US"
     ): NetworkResponse<PopularMovieResponse, ErrorResponse>
 
+//    @GET("movie/airing_today")
+//    suspend fun getLatestMovies(
+//        @Query("page") page: Int = 1,
+//        @Query("language") language: String = "en-US"
+//    ): Response<PopularMovieResponse>
+
 
 
 
