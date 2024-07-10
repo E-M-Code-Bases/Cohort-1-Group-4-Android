@@ -25,20 +25,34 @@
                 android:layout_height="match_parent"
                 app:layout_collapseMode="parallax">
 
-
-                <ImageView
-                    android:id="@+id/details_poster"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:scaleType="centerCrop"
-                    />
+                    android:layout_height="400dp">
+
+                    <ImageView
+                        android:id="@+id/details_poster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+
+                    <Button
+                        android:id="@+id/playseries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="@color/white"
+                        android:elevation="8dp"
+                        android:text="Play"
+                        android:textColor="@color/black"/>
+                </FrameLayout>
 
                 <ImageView
                     android:id="@+id/back_press"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:src="@drawable/ic_arrow_back"/>
+                    android:src="@drawable/ic_arrow_back" />
 
                 <TextView
                     style="@style/TextAppearance.AppCompat.Title"
@@ -51,8 +65,8 @@
                     android:maxLines="1"
                     android:text="Name"
                     android:textColor="@color/white" />
-            </RelativeLayout>
 
+            </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
